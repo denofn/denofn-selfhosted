@@ -4,7 +4,6 @@ import fn from "./registry_in/%SCRIPT_NAME%/index.ts";
 
 const run = async () => {
   const server = serve({ port: %PORT% });
-  console.log("%SCRIPT_NAME%")
 
   for await (const req of server) {
     fn(req);

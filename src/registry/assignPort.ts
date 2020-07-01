@@ -1,8 +1,10 @@
+import { sortNumbers } from "../shared/sortNumbers.ts";
+import { RegistryJSONInternal } from "../shared/types.ts";
 import {
   getPortsRegistry,
+  getScriptRegistry,
   setPortsRegistry,
   setScriptRegistry,
-  getScriptRegistry,
 } from "./registry.ts";
 
 const basePort = 4000;
@@ -10,9 +12,7 @@ const maxPort = 4999;
 
 export const assignPortInRegistry = (scriptName: string) => {
   const portsRegistry = getPortsRegistry();
-  const highestPortInRegistry = Object.values(portsRegistry).sort((a, b) =>
-    a - b
-  )
+  const highestPortInRegistry = Object.values(portsRegistry).sort(sortNumbers)
     .pop();
   const nextPort = highestPortInRegistry ? highestPortInRegistry + 1 : basePort;
 
@@ -22,7 +22,15 @@ export const assignPortInRegistry = (scriptName: string) => {
     );
   }
 
-  const scripts = Object.keys(portsRegistry);
+  return persistToFile(scriptName, nextPort, portsRegistry);
+};
+
+function persistToFile(
+  scriptName: string,
+  nextPort: number,
+  registry: Record<string, number>,
+): RegistryJSONInternal {
+  const scripts = Object.keys(registry);
 
   if (!scripts.includes(scriptName)) {
     const packageRegistry = setScriptRegistry(
@@ -32,9 +40,9 @@ export const assignPortInRegistry = (scriptName: string) => {
     );
 
     setPortsRegistry(
-      { ...portsRegistry, ...{ [scriptName]: nextPort } },
+      { ...registry, ...{ [scriptName]: nextPort } },
     );
 
     return packageRegistry;
-  }
-};
+  } else return {} as RegistryJSONInternal;
+}

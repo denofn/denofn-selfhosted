@@ -7,34 +7,34 @@ const toReplacePortId = `%PORT%`;
 export const bundle = async (scriptName: string, portName: number) => {
   const toBundlePath = appendCwd(`/toBundle.ts`);
 
-  if (dirExists(appendCwd(`/registry_in/${scriptName}`))) {
-    // Create toBundle.ts
-    const bundlerFile = Deno.readTextFileSync(
-      appendCwd(`/templates/bundle.ts`),
-    ).replaceAll(toReplaceId, scriptName).replaceAll(
-      toReplacePortId,
-      `${portName}`,
-    );
-
-    Deno.writeTextFileSync(toBundlePath, bundlerFile);
-
-    // Bundle
-    const p = Deno.run({
-      cmd: [
-        "deno",
-        "bundle",
-        toBundlePath,
-        appendCwd(`/registry/${scriptName}.js`),
-      ],
-    });
-
-    // Clean up
-    try {
-      await p.status();
-    } finally {
-      Deno.removeSync(toBundlePath);
-    }
-  } else {
+  if (!dirExists(appendCwd(`/registry_in/${scriptName}`))) {
     throw new Error(`Function ${scriptName} does not exist.`);
   }
+
+  const bundlerFile = Deno.readTextFileSync(
+    appendCwd(`/templates/bundle.ts`),
+  ).replaceAll(toReplaceId, scriptName).replaceAll(
+    toReplacePortId,
+    `${portName}`,
+  );
+
+  Deno.writeTextFileSync(toBundlePath, bundlerFile);
+
+  try {
+    await runBundle(toBundlePath, appendCwd(`/registry/${scriptName}.js`))
+      .status();
+  } finally {
+    // Clean up
+    Deno.removeSync(toBundlePath);
+  }
 };
+
+const runBundle = (toBundlePath: string, scriptPath: string) =>
+  Deno.run({
+    cmd: [
+      "deno",
+      "bundle",
+      toBundlePath,
+      scriptPath,
+    ],
+  });
