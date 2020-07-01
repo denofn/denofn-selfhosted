@@ -1,4 +1,5 @@
 import { dirExists } from "../shared/dirExists.ts";
+import * as logger from "../shared/logger.ts";
 import { appendCwd } from "../shared/path.ts";
 import { assignPortInRegistry } from "./assignPort.ts";
 import { bundle } from "./bundle.ts";
@@ -18,7 +19,7 @@ for (const e of Deno.readDirSync(registryIntake)) {
   if (e.isDirectory && !scripts.includes(e.name)) {
     scriptsInRegistryIntake.push(e.name);
   } else {
-    console.info(`Skipping ${e.name}: already registered.`);
+    logger.system("Registry", `Skipping ${e.name}, already registered`);
   }
 }
 

@@ -1,3 +1,5 @@
+import * as logger from "../shared/logger.ts";
+
 type DbEntry = {
   process?: number;
   warmup?: number;
@@ -15,11 +17,14 @@ export const set = (key: string, data: Partial<DbEntry>) => {
 
   return db.set(key, { ...(db.get(key) || {}), ...data } as DbEntry);
 };
+
 export const get = (key: string) => db.get(key);
+
 export const has = (key: string) => db.has(key);
 
 export const hasStarted = (key: string) =>
   has(key) ? Boolean(get(key)?.started) : false;
+
 export const isWarmedUp = (key: string) =>
   has(key) ? Boolean(get(key)?.warmedUp) : false;
 
@@ -27,15 +32,21 @@ export const isLocked = (key: string) =>
   has(key) ? Boolean((get(key)?.locks?.size || 0) >= 1) : false;
 
 export const createLock = (key: string, lock: string) => {
-  console.log(`Creating lock on ${key}: ${lock}`);
+  logger.script(key, `Creating lock ${lock}`);
+
   const locks = set(key, {}).get(key)?.locks as Set<string>;
+
   locks.add(lock);
+
   return set(key, { locks });
 };
 
-export const freeLock = (key: string, lock: string) => {
-  console.log(`Freeing lock on ${key}: ${lock}`);
+export const freeLock = (key: string, lock: string, started: number) => {
+  logger.script(key, `Freeing lock ${lock}`);
+
   const locks = get(key)?.locks as Set<string>;
+
   locks.delete(lock);
-  return set(key, { locks });
+
+  return set(key, { locks, started });
 };
