@@ -1,4 +1,5 @@
 import * as logger from "../shared/logger.ts";
+import { compareWithNow } from "../shared/compareWithNow.ts";
 
 type DbEntry = {
   process?: number;
@@ -41,12 +42,21 @@ export const createLock = (key: string, lock: string) => {
   return set(key, { locks });
 };
 
-export const freeLock = (key: string, lock: string, started: number) => {
+export const freeLock = (
+  key: string,
+  lock: string,
+  started: number,
+  _lockStarted?: number,
+) => {
   logger.script(key, `Freeing lock ${lock}`);
 
   const locks = get(key)?.locks as Set<string>;
 
   locks.delete(lock);
+  logger.script(
+    key,
+    `Lock ${lock} lasted ${compareWithNow(_lockStarted || started)}ms`,
+  );
 
   return set(key, { locks, started });
 };

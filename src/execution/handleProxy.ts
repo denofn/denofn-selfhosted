@@ -5,10 +5,10 @@ export const handleProxy = (
   scriptName: string,
   proxyUrl: string,
   lock: string,
-  createLock: boolean,
+  lockStarted?: number,
 ) =>
   (req: any, res: any, next: any) => {
-    if (createLock) db.createLock(scriptName, lock);
+    if (!lockStarted) db.createLock(scriptName, lock);
 
     const newStarted = Date.now(); // instantiate where the actual request is started
 
@@ -20,7 +20,7 @@ export const handleProxy = (
             "Content-Type": "text/plain; charset=utf-8",
           });
           res.setStatus(proxyResponse.status).end(proxyResData);
-          db.freeLock(scriptName, lock, newStarted);
+          db.freeLock(scriptName, lock, newStarted, lockStarted);
         },
       },
     )(req, res, next);
