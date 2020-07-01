@@ -1,0 +1,15 @@
+{
+  "deno.enable": true,
+  "editor.formatOnSave": true,
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "\\.ts$",
+        "cmd": "deno fmt ${file}"
+      }
+    ]
+  },
+  "[typescript]": {
+    "editor.formatOnSave": false
+  }
+}

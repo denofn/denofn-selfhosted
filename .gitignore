@@ -1,0 +1,4 @@
+registry/
+!src/registry
+registry_in/
+toBundle.ts
