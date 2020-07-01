@@ -12,20 +12,19 @@ import {
 export const registerScriptHandler = (app: ReturnType<typeof opine>) =>
   (scriptName: string, proxyUrl: string) => {
     app.use(`/${scriptName}`, async (req, res, next) => {
-      let shouldCreateLock = true;
+      let lockStarted;
       const lock = UUID.generate();
       const has = db.has(scriptName);
 
       if (!has || (has && !db.get(scriptName)?.process)) {
-        await scenario1(scriptName, proxyUrl, lock);
-        shouldCreateLock = false;
+        lockStarted = await scenario1(scriptName, proxyUrl, lock);
       } else if (
         has && !db.get(scriptName)?.process && db.isLocked(scriptName)
       ) {
         await scenario2(scriptName);
       }
 
-      handleProxy(scriptName, proxyUrl, lock, shouldCreateLock)(req, res, next);
+      handleProxy(scriptName, proxyUrl, lock, lockStarted)(req, res, next);
     });
   };
 
@@ -37,6 +36,7 @@ export const registerScriptHandler = (app: ReturnType<typeof opine>) =>
 
 async function scenario1(scriptName: string, proxyUrl: string, lock: string) {
   db.createLock(scriptName, lock); // Also creates entry if non-existent
+  const now = Date.now();
 
   logger.system("Execution", `Spawning new ${scriptName} instance`);
 
@@ -47,6 +47,8 @@ async function scenario1(scriptName: string, proxyUrl: string, lock: string) {
     scriptName,
     { process, started, warmup, warmedUp: true },
   );
+
+  return now;
 }
 
 async function scenario2(scriptName: string) {
