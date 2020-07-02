@@ -20,11 +20,13 @@ This is created as a learning opportunity to:
       1. [ ] Upload files
       1. [ ] Change permissions
       1. [ ] Remove registration via mounted volume
+      1. [ ] Refresh code
 1. [ ] Spawn, execute, kill
    1. [x] Execution server
    1. [x] Spawn subprocess for requests
    1. [x] Kill process after X seconds of idleness
-   1. [ ] Auto warmup, configured in registry
+   1. [x] Auto warmup, configured in registry
+      - [ ] Properly defer checks when file isn't registered yet
    1. [ ] Allow SPA stuff (routing in scriptHandler)
    1. [ ] Persist logs
    1. [ ] Monitoring dashboard UI
@@ -32,9 +34,9 @@ This is created as a learning opportunity to:
    1. [x] Create Dockerfile for registry
    1. [x] Create Dockerfile for execution
    1. [x] Create docker-compose file
-1. Lib improvements
+1. [ ] Lib improvements
    1. [ ] Opine is quite messy in implementation (see registerScriptHandler.ts)
-   1. [ ] Provide own library to wrap functions with (router, serving, ...)
+   1. [x] Provide own library to wrap functions with (router, serving, ...)
    1. [ ] Think about monorepos in Deno (and how to organize them)
    1. [ ] Testing
    1. [ ] Script running (`./cache.sh`, ...)
