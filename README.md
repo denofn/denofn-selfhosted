@@ -30,6 +30,11 @@ _NOTE: further instructions are written towards UNIX systems since .sh scripts a
 - `./registry.sh`
 - `./execution.sh`
 
+### Contributing new deps
+
+- Non versioned dependencies will not be allowed
+- run `./cache.sh` for opening a PR
+
 ## Function layout
 
 - [folder] scriptName

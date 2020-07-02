@@ -16,7 +16,7 @@ export const set = (key: string, data: Partial<DbEntry>) => {
     return db.set(key, { ...data, locks: new Set(), warmedUp: false });
   }
 
-  return db.set(key, { ...(db.get(key) || {}), ...data } as DbEntry);
+  return db.set(key, { ...(db.get(key) ?? {}), ...data } as DbEntry);
 };
 
 export const get = (key: string) => db.get(key);
@@ -30,7 +30,7 @@ export const isWarmedUp = (key: string) =>
   has(key) ? Boolean(get(key)?.warmedUp) : false;
 
 export const isLocked = (key: string) =>
-  has(key) ? Boolean((get(key)?.locks?.size || 0) >= 1) : false;
+  has(key) ? Boolean((get(key)?.locks?.size ?? 0) >= 1) : false;
 
 export const createLock = (key: string, lock: string) => {
   logger.script(key, `Creating lock ${lock}`);
@@ -55,7 +55,7 @@ export const freeLock = (
   locks.delete(lock);
   logger.script(
     key,
-    `Lock ${lock} lasted ${compareWithNow(_lockStarted || started)}ms`,
+    `Lock ${lock} lasted ${compareWithNow(_lockStarted ?? started)}ms`,
   );
 
   return set(key, { locks, started });

@@ -2,12 +2,16 @@ version: "3.8"
 
 services:
   fnregistry:
-    image: functionslocal/registry:latest
+    build:
+      dockerfile: registry.Dockerfile
+      context: .
     volumes:
       - ./registry_in:/functions/registry_in
       - registry:/functions/registry
   fnserver:
-    image: functionslocal/executionserver
+    build:
+      dockerfile: execution.Dockerfile
+      context: .
     volumes:
       - registry:/functions/registry
     ports:

@@ -5,7 +5,7 @@ import { pingServer } from "./pingServer.ts";
 
 export const warmup = async (scriptName: string, proxyUrl: string) => {
   const warmupIncrement = c.TIMEOUT_INCREMENT;
-  let warmup = db.get(scriptName)?.warmup || warmupIncrement;
+  let warmup = db.get(scriptName)?.warmup ?? warmupIncrement;
 
   const started = Date.now();
   let a = await waitAndPing(warmup, proxyUrl);
