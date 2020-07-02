@@ -11,26 +11,30 @@ if (!dirExists(registryIntake)) {
   throw new Error(`Registry intake is not mounted`);
 }
 
-// TODO: do this in a cronjob
 // TODO: registry dockerfile
 
-const portsRegistry = getPortsRegistry();
-const scripts = Object.keys(portsRegistry);
-const scriptsInRegistryIntake = [];
+async function checkRegistry() {
+  const portsRegistry = getPortsRegistry();
+  const scripts = Object.keys(portsRegistry);
+  const scriptsInRegistryIntake = [];
 
-for (const e of Deno.readDirSync(registryIntake)) {
-  if (e.isDirectory && !scripts.includes(e.name)) {
-    scriptsInRegistryIntake.push(e.name);
-  } else {
-    logger.system("Registry", `Skipping ${e.name}, already registered`);
+  for (const e of Deno.readDirSync(registryIntake)) {
+    if (e.isDirectory && !scripts.includes(e.name)) {
+      scriptsInRegistryIntake.push(e.name);
+    } else {
+      logger.system("Registry", `Skipping ${e.name}, already registered`);
+    }
+  }
+
+  for (let i = 0; i < scriptsInRegistryIntake.length; i++) {
+    const dirName = scriptsInRegistryIntake[i];
+    const packageRegistry = assignPortInRegistry(dirName);
+
+    if (packageRegistry?.name && packageRegistry?.port) {
+      await bundle(packageRegistry.name, packageRegistry.port);
+    }
   }
 }
 
-for (let i = 0; i < scriptsInRegistryIntake.length; i++) {
-  const dirName = scriptsInRegistryIntake[i];
-  const packageRegistry = assignPortInRegistry(dirName);
-
-  if (packageRegistry?.name && packageRegistry?.port) {
-    await bundle(packageRegistry.name, packageRegistry.port);
-  }
-}
+await checkRegistry();
+setInterval(checkRegistry, 30_000);
