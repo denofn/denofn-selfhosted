@@ -28,9 +28,10 @@ This is created as a learning opportunity to:
    1. [ ] Allow SPA stuff (routing in scriptHandler)
    1. [ ] Persist logs
    1. [ ] Monitoring dashboard UI
-1. [ ] Docker
-   1. [ ] Create Dockerfiles
-   1. [ ] Create docker-compose file
+1. [x] Docker
+   1. [x] Create Dockerfile for registry
+   1. [x] Create Dockerfile for execution
+   1. [x] Create docker-compose file
 1. Lib improvements
    1. [ ] Opine is quite messy in implementation (see registerScriptHandler.ts)
    1. [ ] Provide own library to wrap functions with (router, serving, ...)

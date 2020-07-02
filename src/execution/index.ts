@@ -8,8 +8,6 @@ import {
   terminateHandlerStorage,
 } from "./terminateHandler.ts";
 
-// TODO: execution dockerfile
-
 const app = opine();
 const scriptHandler = registerScriptHandler(app);
 

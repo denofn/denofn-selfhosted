@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  fnregistry:
+    image: functionslocal/registry:latest
+    volumes:
+      - ./registry_in:/functions/registry_in
+      - registry:/functions/registry
+  fnserver:
+    image: functionslocal/executionserver
+    volumes:
+      - registry:/functions/registry
+    ports:
+      - "8000:8000"
+
+volumes:
+  registry:
