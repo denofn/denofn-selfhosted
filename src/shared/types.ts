@@ -19,6 +19,7 @@ export type Permissions = BasicPermissions & { "allow-net": NetPermission } & {
 
 export type RegistryJSON = {
   permissions: (keyof Permissions)[];
+  warmupOnStart?: boolean;
 };
 
 export type RegistryJSONInternal = RegistryJSON & {

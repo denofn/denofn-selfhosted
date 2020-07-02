@@ -1,5 +1,6 @@
 import { opine } from "../../deps.ts";
 import * as logger from "../shared/logger.ts";
+import { checkWarmupOnStart } from "./checkWarmupOnStart.ts";
 import * as c from "./constants.ts";
 import { fetchRegistry } from "./fetchRegistry.ts";
 import { registerScriptHandler } from "./registerScriptHandler.ts";
@@ -23,6 +24,7 @@ const attachHandlers = (scriptName: string, proxyUrl: string) => {
     );
 
     logger.script(scriptName, `Has been registered`);
+    checkWarmupOnStart(scriptName, proxyUrl);
   }
 };
 
@@ -42,5 +44,3 @@ setInterval(setRegisteredApps, c.REGISTRY_CHECK_INTERVAL);
 
 logger.system("Execution", `Serving on port ${8000}`);
 app.listen(8000);
-
-// TODO: warmup on boot (with flag in registry.json!)

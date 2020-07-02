@@ -17,7 +17,7 @@ export const handleProxy = (
       proxyUrl,
       {
         srcResDecorator: (_, res, proxyResponse, proxyResData) => {
-          // TODO: check if proxy reponse already gives proper headeers when defined
+          // TODO: check if proxy reponse already gives proper headers when defined
           res.set({
             "Content-Type": "text/plain; charset=utf-8",
           });

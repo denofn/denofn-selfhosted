@@ -34,7 +34,11 @@ export const registerScriptHandler = (app: ReturnType<typeof opine>) =>
  * 2) no active process but is locked already (this is why we lock FIRST in 1!): wait till warmed up -> then lock -> do stuff -> free lock
  */
 
-async function scenario1(scriptName: string, proxyUrl: string, lock: string) {
+export async function scenario1(
+  scriptName: string,
+  proxyUrl: string,
+  lock: string,
+) {
   db.createLock(scriptName, lock); // Also creates entry if non-existent
   const now = Date.now();
 
