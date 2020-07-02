@@ -11,8 +11,6 @@ if (!dirExists(registryIntake)) {
   throw new Error(`Registry intake is not mounted`);
 }
 
-// TODO: registry dockerfile
-
 const args = Deno.args;
 const isSilent = args.includes("silent");
 
