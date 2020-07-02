@@ -1,0 +1,1 @@
+./buildDockers.sh && docker-compose up -d;

@@ -17,11 +17,9 @@ export const handleProxy = (
       proxyUrl,
       {
         srcResDecorator: (_, res, proxyResponse, proxyResData) => {
-          // TODO: check if proxy reponse already gives proper headers when defined
-          res.set({
-            "Content-Type": "text/plain; charset=utf-8",
-          });
-          res.setStatus(proxyResponse.status).end(proxyResData);
+          res.set(proxyResponse.headers).setStatus(proxyResponse.status).end(
+            proxyResData,
+          );
           db.freeLock(scriptName, lock, newStarted, lockStarted);
         },
       },
