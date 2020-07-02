@@ -18,6 +18,16 @@ export const setPortsRegistry = (r: RegistryKV) => {
   return r;
 };
 
+export const getScriptRegistryInternal = (
+  scriptName: string,
+): RegistryJSONInternal => {
+  const scriptDir = appendCwd(`/registry/${scriptName}.json`);
+  if (!fileExists(scriptDir)) {
+    throw new Error(`${scriptName} registry does not exist!`);
+  }
+  return JSON.parse(Deno.readTextFileSync(scriptDir));
+};
+
 export const getScriptRegistry = (scriptName: string): RegistryJSON => {
   const scriptDir = appendCwd(`/registry_in/${scriptName}/registry.json`);
   if (!fileExists(scriptDir)) {
