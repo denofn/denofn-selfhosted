@@ -1,4 +1,5 @@
 import { dirExists } from "../shared/dirExists.ts";
+import * as logger from "../shared/logger.ts";
 import { appendCwd } from "../shared/path.ts";
 
 const toReplaceId = `%SCRIPT_NAME%`;
@@ -23,6 +24,7 @@ export const bundle = async (scriptName: string, portName: number) => {
   try {
     await runBundle(toBundlePath, appendCwd(`/registry/${scriptName}.js`))
       .status();
+    logger.system("Registry", `Successfully registered ${scriptName}`);
   } finally {
     // Clean up
     Deno.removeSync(toBundlePath);

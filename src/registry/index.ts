@@ -13,7 +13,10 @@ if (!dirExists(registryIntake)) {
 
 // TODO: registry dockerfile
 
-async function checkRegistry() {
+const args = Deno.args;
+const isSilent = args.includes("silent");
+
+async function checkRegistry(silent?: boolean) {
   const portsRegistry = getPortsRegistry();
   const scripts = Object.keys(portsRegistry);
   const scriptsInRegistryIntake = [];
@@ -22,7 +25,8 @@ async function checkRegistry() {
     if (e.isDirectory && !scripts.includes(e.name)) {
       scriptsInRegistryIntake.push(e.name);
     } else {
-      logger.system("Registry", `Skipping ${e.name}, already registered`);
+      !silent &&
+        logger.system("Registry", `Skipping ${e.name}, already registered`);
     }
   }
 
@@ -36,5 +40,6 @@ async function checkRegistry() {
   }
 }
 
+// Always verbose on first run
 await checkRegistry();
-setInterval(checkRegistry, 30_000);
+setInterval(() => checkRegistry(isSilent), 30_000);
