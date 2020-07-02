@@ -1,5 +1,7 @@
 import { Colors } from "../../deps.ts";
 
+// TODO: add layer to persist to file
+
 export const script = (scriptName: string, message: string) =>
   console.log(
     Colors.yellow(`[${scriptName}]`.padEnd(20)),

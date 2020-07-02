@@ -11,6 +11,9 @@ if (!dirExists(registryIntake)) {
   throw new Error(`Registry intake is not mounted`);
 }
 
+// TODO: do this in a cronjob
+// TODO: registry dockerfile
+
 const portsRegistry = getPortsRegistry();
 const scripts = Object.keys(portsRegistry);
 const scriptsInRegistryIntake = [];
