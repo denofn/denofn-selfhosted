@@ -12,10 +12,12 @@ export const handleProxy = (
 
     const newStarted = Date.now(); // instantiate where the actual request is started
 
+    // TODO: properly handle in a routing library (shared between execution and scripts)
     proxy(
       proxyUrl,
       {
         srcResDecorator: (_, res, proxyResponse, proxyResData) => {
+          // TODO: check if proxy reponse already gives proper headeers when defined
           res.set({
             "Content-Type": "text/plain; charset=utf-8",
           });
