@@ -1,0 +1,19 @@
+- Put registry back to linked volume -> you want to mount to external volume on cloud (Digitalocean f.e.)
+  - put this path in a variable loaded by shell script
+- consolidate shell scripts into 1
+  - ingest volume path to registry
+  - MAYBE remove + create docker volume to registry `docker volume create ...`
+  - OTHERWISE just map the path in docker-compose
+  - docker-compose up -d
+- docker-compose
+  - add registry volume
+- registry
+  - move away from potentially allowing workers all deno permissions and refactor it to a network whitelist
+- execution
+  - ingest permissions for network whitelist and pass to orchestration
+- extract orchestration layer to separate module
+  - try toAsyncIterator for spawning deno processes
+  - spawning and killing shouldn't exist "inside" execution layer
+  - potentially extract into separate dockerfile as well
+- move to monorepo and ingest deps per package (and ingest own deps from jsdeliver/deno.land/...)
+  - maybe run publish script that rewrites deps per package

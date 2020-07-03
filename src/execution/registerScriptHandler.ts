@@ -1,5 +1,6 @@
 import { opine, UUID } from "../../deps.ts";
 import * as logger from "../shared/logger.ts";
+import { proxyUrl } from "../shared/proxyUrl.ts";
 import * as c from "./constants.ts";
 import * as db from "./db.ts";
 import { handleProxy } from "./handleProxy.ts";
@@ -10,21 +11,21 @@ import {
 } from "./warmup.ts";
 
 export const registerScriptHandler = (app: ReturnType<typeof opine>) =>
-  (scriptName: string, proxyUrl: string) => {
+  (scriptName: string, port: number) => {
     app.use(`/${scriptName}`, async (req, res, next) => {
       let lockStarted;
       const lock = UUID.generate();
       const has = db.has(scriptName);
 
       if (!has || (has && !db.get(scriptName)?.process)) {
-        lockStarted = await scenario1(scriptName, proxyUrl, lock);
+        lockStarted = await scenario1(scriptName, port, lock);
       } else if (
         has && !db.get(scriptName)?.process && db.isLocked(scriptName)
       ) {
         await scenario2(scriptName);
       }
 
-      handleProxy(scriptName, proxyUrl, lock, lockStarted)(req, res, next);
+      handleProxy(scriptName, port, lock, lockStarted)(req, res, next);
     });
   };
 
@@ -36,7 +37,7 @@ export const registerScriptHandler = (app: ReturnType<typeof opine>) =>
 
 export async function scenario1(
   scriptName: string,
-  proxyUrl: string,
+  port: number,
   lock: string,
 ) {
   db.createLock(scriptName, lock); // Also creates entry if non-existent
@@ -45,7 +46,7 @@ export async function scenario1(
   logger.system("Execution", `Spawning new ${scriptName} instance`);
 
   const { pid: process } = await spawn(scriptName);
-  const [warmup, started] = await warmupFunction(scriptName, proxyUrl);
+  const [warmup, started] = await warmupFunction(scriptName, proxyUrl(port));
 
   db.set(
     scriptName,

@@ -7,7 +7,7 @@ import { scenario1 } from "./registerScriptHandler.ts";
 
 export const checkWarmupOnStart = async (
   scriptName: string,
-  proxyUrl: string,
+  port: number,
 ) => {
   // TODO: properly defer till exists with exponential backoff
   await wait(5_000);
@@ -24,6 +24,6 @@ export const checkWarmupOnStart = async (
 
   logger.system("Execution", `Warming up ${scriptName}`);
   const lock = UUID.generate();
-  const lockStarted = await scenario1(scriptName, proxyUrl, lock);
+  const lockStarted = await scenario1(scriptName, port, lock);
   db.freeLock(scriptName, lock, lockStarted);
 };

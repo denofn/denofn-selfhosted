@@ -1,9 +1,10 @@
 import { proxy } from "../../deps.ts";
+import { proxyUrl } from "../shared/proxyUrl.ts";
 import * as db from "./db.ts";
 
 export const handleProxy = (
   scriptName: string,
-  proxyUrl: string,
+  port: number,
   lock: string,
   lockStarted?: number,
 ) =>
@@ -14,7 +15,7 @@ export const handleProxy = (
 
     // TODO: properly handle in a routing library (shared between execution and scripts)
     proxy(
-      proxyUrl,
+      proxyUrl(port),
       {
         srcResDecorator: (_, res, proxyResponse, proxyResData) => {
           res.set(proxyResponse.headers).setStatus(proxyResponse.status).end(

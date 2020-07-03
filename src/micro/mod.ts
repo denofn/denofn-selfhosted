@@ -12,9 +12,11 @@ export type Request = {
   protoMinor: number;
 };
 
-export type Handler = (req: Request) => Response | string;
+export type Handler = (
+  req: Request,
+) => Response | string | Promise<Response | string>;
 
-type LibHandler = (req: server.ServerRequest) => void;
+type LibHandler = (req: server.ServerRequest) => void | Promise<void>;
 
 const createResponse = (r: Response | string): Response => {
   if (typeof r === "string") {
@@ -51,13 +53,13 @@ export async function serve(handler: LibHandler, port: number) {
   const s = server.serve({ port });
 
   for await (const req of s) {
-    handler(req);
+    await handler(req);
   }
 }
 
 export const createHandler = (h: Handler): LibHandler =>
-  (req: server.ServerRequest) => {
+  async (req: server.ServerRequest) => {
     const request: Request = createRequest(req);
-    const response = createResponse(h(request));
+    const response = createResponse(await h(request));
     req.respond(response);
   };

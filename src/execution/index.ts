@@ -8,23 +8,24 @@ import {
   createTerminateHandler,
   terminateHandlerStorage,
 } from "./terminateHandler.ts";
+import { proxyUrl } from "../shared/proxyUrl.ts";
 
 const app = opine();
 const scriptHandler = registerScriptHandler(app);
 
 let registeredApps = {};
 
-const attachHandlers = (scriptName: string, proxyUrl: string) => {
+const attachHandlers = (scriptName: string, port: number) => {
   const oldRegisteredApps = Object.keys(registeredApps);
 
   if (!oldRegisteredApps.includes(scriptName)) {
-    scriptHandler(scriptName, proxyUrl);
+    scriptHandler(scriptName, port);
     terminateHandlerStorage.add(
       createTerminateHandler(c.MINUTE_IN_MS, scriptName, c.MAX_DELTA_LEN_MS),
     );
 
     logger.script(scriptName, `Has been registered`);
-    checkWarmupOnStart(scriptName, proxyUrl);
+    checkWarmupOnStart(scriptName, port);
   }
 };
 
@@ -32,8 +33,8 @@ const setRegisteredApps = () => {
   logger.system("Execution", "Checking registered scripts");
   const newRegisteredApps = fetchRegistry();
 
-  for (const [scriptName, proxyUrl] of Object.entries(newRegisteredApps)) {
-    attachHandlers(scriptName, proxyUrl);
+  for (const [scriptName, port] of Object.entries(newRegisteredApps)) {
+    attachHandlers(scriptName, port);
   }
 
   registeredApps = newRegisteredApps;
