@@ -1,5 +1,7 @@
 import { server } from "./deps.ts";
 
+type LibHandler = (req: server.ServerRequest) => Promise<void>;
+export type Handler = (req: Request) => Promise<Response | string>;
 export type Response = server.Response;
 export type Request = {
   body: () => Deno.Reader;
@@ -11,12 +13,6 @@ export type Request = {
   protoMajor: number;
   protoMinor: number;
 };
-
-export type Handler = (
-  req: Request,
-) => Response | string | Promise<Response | string>;
-
-type LibHandler = (req: server.ServerRequest) => void | Promise<void>;
 
 const createResponse = (r: Response | string): Response => {
   if (typeof r === "string") {
@@ -30,7 +26,7 @@ const createResponse = (r: Response | string): Response => {
   const headers = r.headers ??
     new Headers({ "Content-Type": "text/plain; charset=utf-8" });
   const status = r.status ?? 200;
-  const body = r.body ?? status === 200 ? "OK" : undefined;
+  const body = r.body ? r.body : status === 200 ? "OK" : "";
   return {
     headers,
     status,
@@ -49,17 +45,31 @@ const createRequest = (req: server.ServerRequest): Request => ({
   protoMinor: req.protoMinor,
 });
 
-export async function serve(handler: LibHandler, port: number) {
-  const s = server.serve({ port });
-
-  for await (const req of s) {
-    await handler(req);
+export class NetworkError extends Error {
+  statusCode: number;
+  constructor(statusCode: number, message: string) {
+    super(message);
+    this.statusCode = statusCode;
   }
 }
 
 export const createHandler = (h: Handler): LibHandler =>
   async (req: server.ServerRequest) => {
     const request: Request = createRequest(req);
-    const response = createResponse(await h(request));
-    req.respond(response);
+    try {
+      const response = createResponse(await h(request));
+      req.respond(response);
+    } catch (e) {
+      const E: NetworkError = e;
+      req.respond(createResponse({
+        status: E.statusCode ?? 500,
+        body: E.message ?? `Internal Server Error`,
+      }));
+    }
   };
+
+export async function serve(handler: LibHandler, port: number) {
+  for await (const req of server.serve({ port })) {
+    await handler(req);
+  }
+}

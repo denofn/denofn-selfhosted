@@ -10,7 +10,7 @@ COPY fromCache.sh /functions
 RUN ./fromCache.sh
 
 ADD ./src/execution /functions/src/execution
-ADD ./src/registry/registry.ts /functions/src/registry/registry.ts
+ADD ./src/registry /functions/src/registry
 ADD ./src/shared /functions/src/shared
 RUN deno cache --unstable src/execution/index.ts
 

@@ -8,7 +8,7 @@ import {
   createTerminateHandler,
   terminateHandlerStorage,
 } from "./terminateHandler.ts";
-import { proxyUrl } from "../shared/proxyUrl.ts";
+import { getScriptRegistryInternal } from "../registry/mod.ts";
 
 const app = opine();
 const scriptHandler = registerScriptHandler(app);
@@ -19,13 +19,15 @@ const attachHandlers = (scriptName: string, port: number) => {
   const oldRegisteredApps = Object.keys(registeredApps);
 
   if (!oldRegisteredApps.includes(scriptName)) {
-    scriptHandler(scriptName, port);
+    const internalRegistry = getScriptRegistryInternal(scriptName);
+
+    scriptHandler(internalRegistry);
     terminateHandlerStorage.add(
       createTerminateHandler(c.MINUTE_IN_MS, scriptName, c.MAX_DELTA_LEN_MS),
     );
 
     logger.script(scriptName, `Has been registered`);
-    checkWarmupOnStart(scriptName, port);
+    checkWarmupOnStart(internalRegistry);
   }
 };
 

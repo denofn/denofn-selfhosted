@@ -1,6 +1,7 @@
 import { opine, UUID } from "../../deps.ts";
 import * as logger from "../shared/logger.ts";
 import { proxyUrl } from "../shared/proxyUrl.ts";
+import { RegistryJSONInternal } from "../shared/types.ts";
 import * as c from "./constants.ts";
 import * as db from "./db.ts";
 import { handleProxy } from "./handleProxy.ts";
@@ -11,14 +12,15 @@ import {
 } from "./warmup.ts";
 
 export const registerScriptHandler = (app: ReturnType<typeof opine>) =>
-  (scriptName: string, port: number) => {
+  (registry: RegistryJSONInternal) => {
+    const { name: scriptName, port } = registry;
     app.use(`/${scriptName}`, async (req, res, next) => {
       let lockStarted;
       const lock = UUID.generate();
       const has = db.has(scriptName);
 
       if (!has || (has && !db.get(scriptName)?.process)) {
-        lockStarted = await scenario1(scriptName, port, lock);
+        lockStarted = await scenario1(registry, lock);
       } else if (
         has && !db.get(scriptName)?.process && db.isLocked(scriptName)
       ) {
@@ -36,16 +38,16 @@ export const registerScriptHandler = (app: ReturnType<typeof opine>) =>
  */
 
 export async function scenario1(
-  scriptName: string,
-  port: number,
+  registry: RegistryJSONInternal,
   lock: string,
 ) {
-  db.createLock(scriptName, lock); // Also creates entry if non-existent
+  db.createLock(registry.name, lock); // Also creates entry if non-existent
   const now = Date.now();
 
+  const { name: scriptName, port } = registry;
   logger.system("Execution", `Spawning new ${scriptName} instance`);
 
-  const { pid: process } = await spawn(scriptName);
+  const { pid: process } = await spawn(registry);
   const [warmup, started] = await warmupFunction(scriptName, proxyUrl(port));
 
   db.set(

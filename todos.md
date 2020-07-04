@@ -1,19 +1,22 @@
-- Put registry back to linked volume -> you want to mount to external volume on cloud (Digitalocean f.e.)
-  - put this path in a variable loaded by shell script
-- consolidate shell scripts into 1
-  - ingest volume path to registry
-  - MAYBE remove + create docker volume to registry `docker volume create ...`
-  - OTHERWISE just map the path in docker-compose
-  - docker-compose up -d
-- docker-compose
-  - add registry volume
-- registry
-  - move away from potentially allowing workers all deno permissions and refactor it to a network whitelist
-- execution
-  - ingest permissions for network whitelist and pass to orchestration
-- extract orchestration layer to separate module
-  - try toAsyncIterator for spawning deno processes
-  - spawning and killing shouldn't exist "inside" execution layer
-  - potentially extract into separate dockerfile as well
-- move to monorepo and ingest deps per package (and ingest own deps from jsdeliver/deno.land/...)
-  - maybe run publish script that rewrites deps per package
+# SECURITY TODOS
+
+- [x] Put registry back to linked volume -> you want to mount to external volume on cloud (Digitalocean f.e.)
+  - [x] put this path in a variable loaded by shell script
+- [x] consolidate shell scripts into 1
+  - [x] ingest volume path to registry
+  - [x] MAYBE remove + create docker volume to registry `docker volume create ...`
+  - [x] docker-compose up -d
+- [x] docker-compose
+  - [x] add registry volume
+- [x] registry
+  - [x] move away from potentially allowing workers all deno permissions and refactor it to a network whitelist
+- [x] execution
+  - [x] ingest permissions for network whitelist and pass to orchestration
+- [ ] container security
+  - [ ] lock down allow read/write?
+- [ ] extract orchestration layer to separate module
+  - [ ] try toAsyncIterator for spawning deno processes
+  - [ ] spawning and killing shouldn't exist "inside" execution layer
+  - [ ] potentially extract into separate dockerfile as well
+- [ ] move to monorepo and ingest deps per package (and ingest own deps from jsdeliver/deno.land/...)
+  - [ ] maybe run publish script that rewrites deps per package
