@@ -53,14 +53,12 @@ This will map in `registry` to
 ### index.ts
 
 ```ts
-import { createHandler } from "../../src/micro/mod.ts";
+import { createHandler } from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0-rc.1/packages/micro/mod.ts";
 
 export default createHandler((_) => "Hello, world");
 ```
 
 `createHandler` gives you a Request object and requires a string or Response object. See typings in `src/micro/mod.ts`.
-
-TODO: use deno.land or github/unpkg in example to micro/mod.ts
 
 ### registry.json
 

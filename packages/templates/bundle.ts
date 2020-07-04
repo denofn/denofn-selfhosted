@@ -1,5 +1,4 @@
-// TODO: reference to github/jsdeliver
-import { serve } from "./packages/micro/mod.ts";
+import { serve } from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0-rc.1/packages/micro/mod.ts";
 
 import fn from "./registry_in/%SCRIPT_NAME%/index.ts";
 
