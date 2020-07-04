@@ -1,13 +1,20 @@
-# denoFn
+<p align="center">
+   <img height="200" style="height:200px;" src="https://github.com/jeroenptrs/denoFn/raw/main/.github/denofn.png" alt="Deno as a Function" />
+   <h1 align="center">denoFn</h1>
+</p>
+<p align="center">Self hosted FaaS provider, made with Deno and Docker.</p>
+<p align="center">
+   <img src="https://img.shields.io/github/v/tag/jeroenptrs/denoFn?label=latest" />
+</p>
 
-Self hosted FaaS provider, made with Deno.
-This is created as a learning opportunity to:
+---
 
-1. work with Deno and think about application security
-1. try to DIY a FaaS provider from scratch, in Typescript
-1. dogfood other DIY tools while creating a frontend/tooling/scripts
-1. improve Dockerfile / docker compose knowledge
-1. ultimately have a fun playground / home integration tool on a server somewhere
+## Preface
+
+Combining a love for Typescript and all things serverless, denoFn started as a little project to also get reaquainted with Deno and Docker.
+It's currently running stable locally on UNIX development machines and on a Digitalocean droplet+volume.
+
+Take a look at the [Todos](#todos) for what's next for denoFn.
 
 ## Local development/contribution
 
@@ -74,36 +81,22 @@ export default createHandler((_) => "Hello, world");
 
 ## Todos
 
-1. [ ] Functions Registry
-   1. [x] Bundle with Deno
-   1. [x] Port provision in registry
-   1. [x] Whitelist provision in registry
-   1. [ ] Allow serving static files (map asset name to filename?)
-1. [ ] Spawn, execute, kill
-   1. [x] Execution server
-   1. [x] Spawn subprocess for requests
-   1. [x] Kill process after X seconds of idleness
-   1. [x] Auto warmup, configured in registry
-      1. [ ] Properly defer checks when file isn't registered yet
-   1. [ ] Allow SPA stuff (wildcard routing in scriptHandler)
-   1. [ ] Persist logs
-1. [ ] Frontend
-   1. [ ] Registry UI
-      1. [ ] Upload files
-      1. [ ] Change permissions
-      1. [ ] Remove registration via mounted volume
-      1. [ ] Refresh code
-   1. [ ] Monitoring dashboard UI
 1. [ ] extract orchestration layer to separate module
    1. [ ] try toAsyncIterator for spawning deno processes
    1. [ ] spawning and killing shouldn't exist "inside" execution layer
    1. [ ] potentially extract into separate dockerfile as well
+1. [ ] Allow serving static files (map asset name to filename?)
+1. [ ] Properly defer warmup pings when file isn't registered yet
+1. [ ] Persistent logs
+1. [ ] Registry UI
+   1. [ ] Upload files
+   1. [ ] Change permissions
+   1. [ ] Remove registration via mounted volume
+   1. [ ] Refresh code
+1. [ ] Monitoring dashboard UI
 1. [ ] Lib improvements
    1. [ ] Opine is quite messy in implementation (see registerScriptHandler.ts)
    1. [ ] Publish script for packages (versioned release)
       - All packages on tag denofn@1.0.0 will have its sibling packages as denofn@1.0.0 in their respective deps.ts file
       - When performing new development, the same script should reset these dependencies to @main/feature-branch or PWD as target
-   1. [x] Provide own library to wrap functions with (router, serving, ...)
-   1. [x] Think about monorepos in Deno (and how to organize them)
    1. [ ] Testing
-   1. [x] Script running (`./cache.sh`, ...)
