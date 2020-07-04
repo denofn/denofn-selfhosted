@@ -1,10 +1,10 @@
-import { fileExists } from "../shared/fileExists.ts";
-import { appendCwd } from "../shared/path.ts";
 import {
+  appendCwd,
+  fileExists,
   RegistryJSON,
   RegistryJSONInternal,
   RegistryKV,
-} from "../shared/types.ts";
+} from "../deps.ts";
 
 const REGISTRY_PORTS_PATH = appendCwd("registry/ports.json");
 

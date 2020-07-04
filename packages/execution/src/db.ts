@@ -1,5 +1,4 @@
-import { compareWithNow } from "../shared/compareWithNow.ts";
-import * as logger from "../shared/logger.ts";
+import { compareWithNow, logger } from "../deps.ts";
 
 type DbEntry = {
   process?: number;

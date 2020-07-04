@@ -1,4 +1,4 @@
-import { getPortsRegistry } from "../registry/registry.ts";
+import { getPortsRegistry } from "../deps.ts";
 
 export const fetchRegistry = () => {
   const r: Record<string, number> = {};

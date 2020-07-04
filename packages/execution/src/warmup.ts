@@ -1,7 +1,6 @@
-import { wait } from "../shared/wait.ts";
+import { pingServer, wait } from "../deps.ts";
 import * as c from "./constants.ts";
 import * as db from "./db.ts";
-import { pingServer } from "./pingServer.ts";
 
 export const warmup = async (scriptName: string, proxyUrl: string) => {
   const warmupIncrement = c.TIMEOUT_INCREMENT;

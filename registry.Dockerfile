@@ -4,17 +4,13 @@ WORKDIR /functions
 
 RUN mkdir registry
 RUN mkdir registry_in
-RUN mkdir templates
 
+COPY denofn.sh /functions
 COPY deps.ts /functions
 COPY lock.json /functions
-COPY fromCache.sh /functions
-RUN ./fromCache.sh
+ADD packages /functions/packages
 
-COPY templates/bundle.ts /functions/templates
-ADD ./src/registry /functions/src/registry
-ADD ./src/shared /functions/src/shared
-ADD ./src/micro /functions/src/micro
-RUN deno cache src/registry/index.ts
+RUN /functions/denofn.sh cache reload
+RUN deno cache ./packages/registry/src/index.ts
 
-CMD ["run", "--allow-read=/functions", "--allow-write=/functions", "--allow-run", "./src/registry/index.ts", "silent"]
+CMD ["run", "--allow-read=/functions", "--allow-write=/functions", "--allow-run", "./packages/registry/src/index.ts", "silent"]

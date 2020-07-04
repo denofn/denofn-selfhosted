@@ -1,8 +1,4 @@
-import { UUID } from "../../deps.ts";
-import { getScriptRegistryInternal } from "../registry/mod.ts";
-import { RegistryJSONInternal } from "../shared/types.ts";
-import * as logger from "../shared/logger.ts";
-import { wait } from "../shared/wait.ts";
+import { logger, RegistryJSONInternal, UUID, wait } from "../deps.ts";
 import * as db from "./db.ts";
 import { scenario1 } from "./registerScriptHandler.ts";
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 down()
 {
@@ -40,7 +40,25 @@ clear()
   rm -r $REGISTRY_PARENT_DIR/registry/*
 }
 
-# $1 => up | down | build | clear | update
+cache()
+{
+  if [ $1 == "reload" ]
+    then
+      ./packages/scripts/fromCache.sh;
+  fi
+
+  if [ $1 == "update" ]
+    then
+      ./packages/scripts/cache.sh;
+  fi
+}
+
+log()
+{
+  docker-compose logs;
+}
+
+# $1 => up | down | build | clear | cache | update | log
 # $1 => registry and intake parent directory
 
 if [ $1 == "down" ]
@@ -63,10 +81,21 @@ if [ $1 == "clear" ]
     clear $2;
 fi
 
+if [ $1 == "cache" ]
+  # $2 => update | reload
+  then
+    cache $2;
+fi
+
 # down + build + up
 if [ $1 == "update" ]
   then
     down;
     build;
     up $2;
+fi
+
+if [ $1 == "log" ]
+  then
+    log;
 fi

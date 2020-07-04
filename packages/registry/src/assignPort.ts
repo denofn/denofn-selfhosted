@@ -1,5 +1,4 @@
-import { sortNumbers } from "../shared/sortNumbers.ts";
-import { RegistryJSONInternal } from "../shared/types.ts";
+import { RegistryJSONInternal, sortNumbers } from "../deps.ts";
 import {
   getPortsRegistry,
   getScriptRegistry,

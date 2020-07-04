@@ -1,4 +1,4 @@
-import { Colors } from "../../deps.ts";
+import { Colors } from "../../../deps.ts";
 
 // TODO: add layer to persist to file
 

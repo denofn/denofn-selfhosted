@@ -1,6 +1,4 @@
-import { dirExists } from "../shared/dirExists.ts";
-import * as logger from "../shared/logger.ts";
-import { appendCwd } from "../shared/path.ts";
+import { appendCwd, dirExists, logger } from "../deps.ts";
 
 const toReplaceId = `%SCRIPT_NAME%`;
 const toReplacePortId = `%PORT%`;
@@ -13,7 +11,7 @@ export const bundle = async (scriptName: string, portName: number) => {
   }
 
   const bundlerFile = Deno.readTextFileSync(
-    appendCwd(`/templates/bundle.ts`),
+    appendCwd(`/packages/templates/bundle.ts`),
   ).replaceAll(toReplaceId, scriptName).replaceAll(
     toReplacePortId,
     `${portName}`,
@@ -34,6 +32,7 @@ export const bundle = async (scriptName: string, portName: number) => {
 const runBundle = (toBundlePath: string, scriptPath: string) =>
   Deno.run({
     cmd: [
+      "time",
       "deno",
       "bundle",
       toBundlePath,

@@ -1,5 +1,4 @@
-import { proxy } from "../../deps.ts";
-import { proxyUrl } from "../shared/proxyUrl.ts";
+import { proxy, proxyUrl } from "../deps.ts";
 import * as db from "./db.ts";
 
 export const handleProxy = (

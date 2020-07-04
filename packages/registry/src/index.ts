@@ -1,6 +1,4 @@
-import { dirExists } from "../shared/dirExists.ts";
-import * as logger from "../shared/logger.ts";
-import { appendCwd } from "../shared/path.ts";
+import { appendCwd, dirExists, logger } from "../deps.ts";
 import { assignPortInRegistry } from "./assignPort.ts";
 import { bundle } from "./bundle.ts";
 import { getPortsRegistry } from "./registry.ts";

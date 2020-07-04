@@ -4,14 +4,12 @@ WORKDIR /functions
 
 RUN mkdir registry
 
+COPY denofn.sh /functions
 COPY deps.ts /functions
 COPY lock.json /functions
-COPY fromCache.sh /functions
-RUN ./fromCache.sh
+ADD packages /functions/packages
 
-ADD ./src/execution /functions/src/execution
-ADD ./src/registry /functions/src/registry
-ADD ./src/shared /functions/src/shared
-RUN deno cache --unstable src/execution/index.ts
+RUN /functions/denofn.sh cache reload
+RUN deno cache --unstable ./packages/execution/src/index.ts
 
-CMD ["run", "--unstable", "--allow-read=/functions", "--allow-write=/functions", "--allow-net", "--allow-run", "./src/execution/index.ts"]
+CMD ["run", "--unstable", "--allow-read=/functions", "--allow-write=/functions", "--allow-net", "--allow-run", "./packages/execution/src/index.ts"]

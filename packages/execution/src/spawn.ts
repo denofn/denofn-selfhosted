@@ -1,5 +1,4 @@
-import { appendCwd } from "../shared/path.ts";
-import { RegistryJSONInternal } from "../shared/types.ts";
+import { appendCwd, RegistryJSONInternal } from "../deps.ts";
 
 export const spawn = async (
   { name: scriptName, whitelist, port }: RegistryJSONInternal,

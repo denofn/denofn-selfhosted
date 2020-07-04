@@ -1,5 +1,4 @@
-import { fileExists } from "../src/shared/fileExists.ts";
-import { appendCwd } from "../src/shared/path.ts";
+import { appendCwd, fileExists } from "../shared/mod.ts";
 
 const lockPath = appendCwd(`/lock.json`);
 

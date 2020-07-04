@@ -1,7 +1,10 @@
-import { opine, UUID } from "../../deps.ts";
-import * as logger from "../shared/logger.ts";
-import { proxyUrl } from "../shared/proxyUrl.ts";
-import { RegistryJSONInternal } from "../shared/types.ts";
+import {
+  logger,
+  opine,
+  proxyUrl,
+  RegistryJSONInternal,
+  UUID,
+} from "../deps.ts";
 import * as c from "./constants.ts";
 import * as db from "./db.ts";
 import { handleProxy } from "./handleProxy.ts";

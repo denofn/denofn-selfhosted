@@ -1,4 +1,4 @@
 registry/
-!src/registry
+!packages/registry
 registry_in/
 toBundle.ts

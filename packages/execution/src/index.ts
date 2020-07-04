@@ -1,5 +1,4 @@
-import { opine } from "../../deps.ts";
-import * as logger from "../shared/logger.ts";
+import { getScriptRegistryInternal, logger, opine } from "../deps.ts";
 import { checkWarmupOnStart } from "./checkWarmupOnStart.ts";
 import * as c from "./constants.ts";
 import { fetchRegistry } from "./fetchRegistry.ts";
@@ -8,7 +7,6 @@ import {
   createTerminateHandler,
   terminateHandlerStorage,
 } from "./terminateHandler.ts";
-import { getScriptRegistryInternal } from "../registry/mod.ts";
 
 const app = opine();
 const scriptHandler = registerScriptHandler(app);

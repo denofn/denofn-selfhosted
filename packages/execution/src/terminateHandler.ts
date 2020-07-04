@@ -1,4 +1,4 @@
-import * as logger from "../shared/logger.ts";
+import { logger } from "../deps.ts";
 import * as db from "./db.ts";
 import { killProcess } from "./killProcess.ts";
 
