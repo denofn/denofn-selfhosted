@@ -6,7 +6,7 @@ services:
       dockerfile: registry.Dockerfile
       context: .
     volumes:
-      - ./registry_in:/functions/registry_in
+      - registry_in:/functions/registry_in
       - registry:/functions/registry
   fnserver:
     build:
@@ -19,3 +19,6 @@ services:
 
 volumes:
   registry:
+    external: true
+  registry_in:
+    external: true

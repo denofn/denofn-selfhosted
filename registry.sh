@@ -1,1 +1,0 @@
-deno run --allow-read --allow-write --allow-run src/registry/index.ts silent
