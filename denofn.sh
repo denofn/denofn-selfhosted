@@ -27,6 +27,10 @@ up()
 
 build()
 {
+  # build base docker image
+  source DENO_VERSION
+  docker build -t deno/alpine:$DENO_VERSION -t deno/alpine:latest -f Dockerfile --build-arg version=$DENO_VERSION .
+
   # create dockerfiles
   docker-compose build;
 }

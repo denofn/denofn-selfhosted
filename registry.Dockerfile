@@ -1,4 +1,4 @@
-FROM hayd/deno:alpine-1.1.1
+FROM deno/alpine:latest
 
 WORKDIR /functions
 
