@@ -17,4 +17,4 @@ ADD ./src/shared /functions/src/shared
 ADD ./src/micro /functions/src/micro
 RUN deno cache src/registry/index.ts
 
-CMD ["run", "--allow-read", "--allow-write", "--allow-run", "./src/registry/index.ts", "silent"]
+CMD ["run", "--allow-read=/functions", "--allow-write=/functions", "--allow-run", "./src/registry/index.ts", "silent"]

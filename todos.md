@@ -12,8 +12,8 @@
   - [x] move away from potentially allowing workers all deno permissions and refactor it to a network whitelist
 - [x] execution
   - [x] ingest permissions for network whitelist and pass to orchestration
-- [ ] container security
-  - [ ] lock down allow read/write?
+- [x] container security
+  - [x] lock down allow read/write?
 - [ ] extract orchestration layer to separate module
   - [ ] try toAsyncIterator for spawning deno processes
   - [ ] spawning and killing shouldn't exist "inside" execution layer

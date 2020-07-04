@@ -14,4 +14,4 @@ ADD ./src/registry /functions/src/registry
 ADD ./src/shared /functions/src/shared
 RUN deno cache --unstable src/execution/index.ts
 
-CMD ["run", "--unstable", "--allow-read", "--allow-write", "--allow-net", "--allow-run", "./src/execution/index.ts"]
+CMD ["run", "--unstable", "--allow-read=/functions", "--allow-write=/functions", "--allow-net", "--allow-run", "./src/execution/index.ts"]
