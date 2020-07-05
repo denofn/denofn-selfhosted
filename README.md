@@ -1,5 +1,5 @@
 <p align="center">
-   <img height="200" style="height:200px;" src="https://github.com/jeroenptrs/denoFn/raw/main/.github/denofn.png" alt="Deno as a Function" />
+   <img height="200" style="height:200px;" src="https://github.com/jeroenptrs/denoFn/raw/main/.github/denofn_transparent.png" alt="Deno as a Function" />
    <h1 align="center">denoFn</h1>
 </p>
 <p align="center">Self hosted FaaS provider, made with Deno and Docker.</p>
