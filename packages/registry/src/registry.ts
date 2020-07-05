@@ -6,7 +6,7 @@ import {
   RegistryKV,
 } from "../deps.ts";
 
-const REGISTRY_PORTS_PATH = appendCwd("registry/ports.json");
+export const REGISTRY_PORTS_PATH = appendCwd("registry/ports.json");
 
 export const getPortsRegistry = (): RegistryKV =>
   !fileExists(REGISTRY_PORTS_PATH) ? setPortsRegistry({}) : JSON.parse(
@@ -23,7 +23,7 @@ export const getScriptRegistryInternal = (
 ): RegistryJSONInternal => {
   const scriptDir = appendCwd(`/registry/${scriptName}.json`);
   if (!fileExists(scriptDir)) {
-    throw new Error(`${scriptName} registry does not exist!`);
+    throw new Error(`${scriptName} internal registry does not exist!`);
   }
   return JSON.parse(Deno.readTextFileSync(scriptDir));
 };

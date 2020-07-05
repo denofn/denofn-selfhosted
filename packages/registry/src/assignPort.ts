@@ -6,8 +6,8 @@ import {
   setScriptRegistry,
 } from "./registry.ts";
 
-const basePort = 4000;
-const maxPort = 4999;
+export const basePort = 4000;
+export const maxPort = 4999;
 
 export const assignPortInRegistry = (scriptName: string) => {
   const portsRegistry = getPortsRegistry();

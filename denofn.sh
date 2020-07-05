@@ -62,9 +62,50 @@ log()
   docker-compose logs;
 }
 
+update_packages_fixtures()
+{
+  cp packages/templates/bundle.ts fixtures/dfn_reg/packages/templates/bundle.ts;
+  cp packages/micro/mod.ts fixtures/dfn_reg/packages/micro/mod.ts;
+  cp packages/micro/deps.ts fixtures/dfn_reg/packages/micro/deps.ts;
+}
+
+clean_up_fixtures()
+{
+  yes | rm -rf registry/*;
+  yes | rm -rf registry_in/*;
+}
+
 run_deno_test()
 {
-  deno test --allow-read packages;
+  c=$PWD;
+
+  if [ $1 = "update" ]
+    then
+      update_packages_fixtures
+  fi
+
+  if [ -z $1 ] || [ $1 = "shared" ]
+    then
+      echo "[packages/shared]";
+      echo "-----------------";
+      deno test --allow-read packages/shared;
+  fi
+
+  if [ -z $1 ] || [ $1 = "registry" ]
+    then
+      echo "[packages/registry]";
+      echo "-------------------";
+      cd $c/fixtures/dfn_reg && deno test --allow-net --allow-run --allow-read --allow-write ../../packages/registry;
+      clean_up_fixtures;
+  fi
+
+  if [ -z $1 ] || [ $1 = "execution" ]
+    then
+      echo "[packages/execution]";
+      echo "--------------------";
+      cd $c/fixtures/dfn_srv && deno test --allow-run --allow-read --allow-write ../../packages/execution;
+      clean_up_fixtures;
+  fi
 }
 
 # $1 => up | down | build | clear | cache | update | log
@@ -110,6 +151,7 @@ if [ $1 = "log" ]
 fi
 
 if [ $1 = "test" ]
+  # $2 is empty or shared | registry | execution | update
   then
-    run_deno_test;
+    run_deno_test $2;
 fi

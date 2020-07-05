@@ -1,4 +1,7 @@
-registry/
+registry
 !packages/registry
-registry_in/
+!fixtures/**/registry
+registry_in
+!fixtures/**/registry_in
 toBundle.ts
+.DS_Store

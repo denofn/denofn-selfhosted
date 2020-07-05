@@ -1,5 +1,5 @@
 import * as logger from "./logger.ts";
-import { assertEquals } from "./testing.ts";
+import { assertEquals } from "./testing/deps.ts";
 
 let a = [];
 const loggingFn = (...args: any[]) => a = args;

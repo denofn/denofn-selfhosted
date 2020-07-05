@@ -41,6 +41,5 @@ async function checkRegistry() {
   }
 }
 
-// Always verbose on first run
 await checkRegistry();
 setInterval(() => checkRegistry(), 30_000);
