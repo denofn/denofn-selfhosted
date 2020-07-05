@@ -33,7 +33,7 @@ _NOTE: further instructions are written towards UNIX systems since .sh scripts a
 - `build` uses docker-compose to build all docker images
 - `up <PATH>` creates volumes at selected path and docker-compose up
 - `down` docker-compose down + removes volumes
-- `update` down + build + up
+- `update <PATH>` down + build + up
 - `log` docker-compose logs
 - `clear <PATH>` clears registry folder at selected path
 - `cache <reload|update>`

@@ -1,4 +1,4 @@
-FROM deno/alpine:latest
+FROM deno-alpine:latest
 
 WORKDIR /functions
 
