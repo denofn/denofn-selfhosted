@@ -7,6 +7,9 @@ on:
 
   pull_request:
 
+env:
+  IMAGE_NAME: deno-alpine
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -16,7 +19,8 @@ jobs:
 
       - name: Run tests
         run: |
-          ./denofn.sh ghTest
+          DENO_VERSION=`cat ./DENO_VERSION`
+          docker build -f Dockerfile --build-arg version=$DENO_VERSION .
 
   push:
     needs: test
@@ -27,9 +31,25 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Build image
+        run: |
+          DENO_VERSION=`cat ./DENO_VERSION`
+          docker build --file Dockerfile --tag $IMAGE_NAME --build-arg version=$DENO_VERSION .
+
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
       - name: Push image
         run: |
-          ./denofn.sh ghPub
+          DENO_VERSION=`cat ./DENO_VERSION`
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$DENO_VERSION
+
+          docker tag $IMAGE_NAME $IMAGE_ID:$DENO_VERSION
+          docker push $IMAGE_ID:$DENO_VERSION
+          docker tag $IMAGE_NAME $IMAGE_ID:latest
+          docker push $IMAGE_ID:latest
