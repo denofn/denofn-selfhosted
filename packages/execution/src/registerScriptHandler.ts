@@ -44,7 +44,7 @@ export async function scenario1(
   const lockStart = Date.now();
 
   const { name: scriptName } = registry;
-  logger.system("Execution", `Spawning new ${scriptName} instance`);
+  logger.system("Execution", `Spawning new ${scriptName} instance`, "file");
 
   const { pid: process } = await spawn(registry);
 

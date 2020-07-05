@@ -19,16 +19,16 @@ export const checkWarmupOnStart = async (
     logger.system(
       "Execution",
       `${scriptName} does not need warmup on start, skipping`,
+      "verbose",
     );
     return; // bail early
   }
 
   while (!fileExists(appendCwd(`/registry/${scriptName}.js`))) {
-    logger.system("Execution", `${scriptName}.js does not exist yet`);
     await wait(c.TIMEOUT_INCREMENT);
   }
 
-  logger.system("Execution", `Warming up ${scriptName}`);
+  logger.system("Execution", `Warming up ${scriptName}`, "info");
   const lock = UUID.generate();
   const lockStart = await scenario1(registry, lock);
   db.freeLock(scriptName, lock, lockStart);

@@ -5,6 +5,7 @@ services:
     build:
       dockerfile: registry.Dockerfile
       context: .
+    command: info
     volumes:
       - registry_in:/functions/registry_in
       - registry:/functions/registry
@@ -17,6 +18,7 @@ services:
     build:
       dockerfile: execution.Dockerfile
       context: .
+    command: info
     volumes:
       - registry:/functions/registry
     ports:

@@ -31,7 +31,7 @@ export const isLocked = (key: string) =>
   has(key) ? Boolean((get(key)?.locks?.size ?? 0) >= 1) : false;
 
 export const createLock = (key: string, lock: string) => {
-  logger.script(key, `Creating lock ${lock}`);
+  logger.script(key, `Creating lock ${lock}`, "info");
 
   const locks = set(key, {}).get(key)?.locks as Set<string>;
 
@@ -46,7 +46,7 @@ export const freeLock = (
   started: number,
   _lockStarted?: number,
 ) => {
-  logger.script(key, `Freeing lock ${lock}`);
+  logger.script(key, `Freeing lock ${lock}`, "verbose");
 
   const locks = get(key)?.locks as Set<string>;
 
@@ -54,6 +54,7 @@ export const freeLock = (
   logger.script(
     key,
     `Lock ${lock} lasted ${compareWithNow(_lockStarted ?? started)}ms`,
+    "info",
   );
 
   return set(key, { locks, started });
