@@ -46,12 +46,12 @@ clear()
 
 cache()
 {
-  if [ $1 == "reload" ]
+  if [ $1 = "reload" ]
     then
       ./packages/scripts/fromCache.sh;
   fi
 
-  if [ $1 == "update" ]
+  if [ $1 = "update" ]
     then
       ./packages/scripts/cache.sh;
   fi
@@ -62,44 +62,54 @@ log()
   docker-compose logs;
 }
 
+run_deno_test()
+{
+  deno test --allow-read packages;
+}
+
 # $1 => up | down | build | clear | cache | update | log
 # $1 => registry and intake parent directory
 
-if [ $1 == "down" ]
+if [ $1 = "down" ]
   then
     down;
 fi
 
-if [ $1 == "up" ]
+if [ $1 = "up" ]
   then
     up $2;
 fi
 
-if [ $1 == "build" ]
+if [ $1 = "build" ]
   then
     build;
 fi
 
-if [ $1 == "clear" ]
+if [ $1 = "clear" ]
   then
     clear $2;
 fi
 
-if [ $1 == "cache" ]
+if [ $1 = "cache" ]
   # $2 => update | reload
   then
     cache $2;
 fi
 
 # down + build + up
-if [ $1 == "update" ]
+if [ $1 = "update" ]
   then
     down;
     build;
     up $2;
 fi
 
-if [ $1 == "log" ]
+if [ $1 = "log" ]
   then
     log;
+fi
+
+if [ $1 = "test" ]
+  then
+    run_deno_test;
 fi

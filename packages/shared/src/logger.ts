@@ -2,11 +2,17 @@ import { Colors } from "../../../deps.ts";
 import { LogLevel, LogSystem } from "./types.ts";
 
 let logLevel: LogLevel = "info";
+let logFn: Function = console.log;
 
 export const levels: LogLevel[] = ["info", "file", "verbose"];
 
 export const setLogLevel = (l: LogLevel) => {
   logLevel = l;
+};
+
+// ONLY USE THIS FOR TESTING!!!
+export const setLoggingFn = (fn: Function) => {
+  logFn = fn;
 };
 
 const log = (tag: string, message: string, level: LogLevel) => {
@@ -16,7 +22,7 @@ const log = (tag: string, message: string, level: LogLevel) => {
     case "info":
       if (level === "verbose") return;
     case "verbose":
-      console.log(tag.padEnd(20), message.padStart(60));
+      logFn(tag.padEnd(20), message.padStart(60));
   }
 };
 
