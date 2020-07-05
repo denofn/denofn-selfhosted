@@ -25,6 +25,25 @@ up()
   docker-compose up -d;
 }
 
+github_docker_test()
+{
+  # build base docker image
+  DENO_VERSION=`cat ./DENO_VERSION`
+  docker build -f Dockerfile --build-arg version=$DENO_VERSION .
+}
+
+github_docker_publish()
+{
+  DENO_VERSION=`cat ./DENO_VERSION`
+  docker build -f Dockerfile --build-arg version=$DENO_VERSION --tag deno-alpine .
+  IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/deno-alpine
+
+  echo IMAGE_ID=$IMAGE_ID
+  echo VERSION=$DENO_VERSION
+  docker tag deno-alpine $IMAGE_ID:$DENO_VERSION
+  docker tag deno-alpine $IMAGE_ID:latest
+}
+
 build()
 {
   # build base docker image
@@ -102,4 +121,14 @@ fi
 if [ $1 == "log" ]
   then
     log;
+fi
+
+if [ $1 == "ghTest" ]
+  then
+    github_docker_test;
+fi
+
+if [ $1 == "ghPub" ]
+  then
+    github_docker_publish;
 fi
