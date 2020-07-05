@@ -2,4 +2,5 @@ import { serve } from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0-rc.1/
 
 import fn from "./registry_in/%SCRIPT_NAME%/index.ts";
 
+console.log("%SCRIPT_NAME%");
 await serve(fn, %PORT%);

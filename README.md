@@ -86,8 +86,8 @@ Uncomment the logging section in `docker-compose.yml` and add your own logging U
 ## Todos
 
 1. [ ] extract orchestration layer to separate module
-   1. [ ] try toAsyncIterator for spawning deno processes
-   1. [ ] spawning and killing shouldn't exist "inside" execution layer
+   1. [x] try toAsyncIterator for spawning deno processes
+   1. [ ] spawning and killing shouldn't exist "inside" execution layer code
    1. [ ] potentially extract into separate dockerfile as well
 1. [ ] Allow serving static files (map asset name to filename?)
 1. [ ] Properly defer warmup pings when file isn't registered yet

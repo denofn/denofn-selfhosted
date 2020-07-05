@@ -20,6 +20,6 @@ export const checkWarmupOnStart = async (
 
   logger.system("Execution", `Warming up ${scriptName}`);
   const lock = UUID.generate();
-  const lockStarted = await scenario1(registry, lock);
-  db.freeLock(scriptName, lock, lockStarted);
+  const lockStart = await scenario1(registry, lock);
+  db.freeLock(scriptName, lock, lockStart);
 };

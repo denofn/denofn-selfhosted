@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  fnregistry:
+  dfn_reg:
     build:
       dockerfile: registry.Dockerfile
       context: .
@@ -13,7 +13,7 @@ services:
     #   options:
     #     syslog-address: "udp://logsN.papertrailapp.com:XXXXX"
     #     tag: "dfn_reg"
-  fnserver:
+  dfn_srv:
     build:
       dockerfile: execution.Dockerfile
       context: .
