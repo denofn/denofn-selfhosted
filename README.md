@@ -60,7 +60,7 @@ This will map in `registry` to
 ### index.ts
 
 ```ts
-import { createHandler } from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0-rc.1/packages/micro/mod.ts";
+import { createHandler } from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0-rc.2/packages/micro/mod.ts";
 
 export default createHandler((_) => "Hello, world");
 ```
