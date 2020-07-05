@@ -13,7 +13,7 @@ const scriptHandler = registerScriptHandler(app);
 
 let registeredApps = {};
 
-const attachHandlers = (scriptName: string, port: number) => {
+const attachHandlers = (scriptName: string) => {
   const oldRegisteredApps = Object.keys(registeredApps);
 
   if (!oldRegisteredApps.includes(scriptName)) {
@@ -33,8 +33,8 @@ const setRegisteredApps = () => {
   logger.system("Execution", "Checking registered scripts");
   const newRegisteredApps = fetchRegistry();
 
-  for (const [scriptName, port] of Object.entries(newRegisteredApps)) {
-    attachHandlers(scriptName, port);
+  for (const [scriptName] of Object.entries(newRegisteredApps)) {
+    attachHandlers(scriptName);
   }
 
   registeredApps = newRegisteredApps;
