@@ -16,7 +16,7 @@ It's currently running stable locally on UNIX development machines and on a Digi
 
 Take a look at the [Todos](#todos) for what's next for denoFn.
 
-## Local development/contribution
+## Local development/contributing
 
 ### Prerequisites
 
@@ -79,6 +79,10 @@ export default createHandler((_) => "Hello, world");
 - `whitelist`: all domains that are allowed for `--allow-net`
 - `warmupOnStart`: will bootstrap your function immediately upon docker initialization. This is still a bit flaky as there are race conditions with registration, will be fixed soon.
 
+## Logging to papertrail
+
+Uncomment the logging section in `docker-compose.yml` and add your own logging URL.
+
 ## Todos
 
 1. [ ] extract orchestration layer to separate module
@@ -87,7 +91,6 @@ export default createHandler((_) => "Hello, world");
    1. [ ] potentially extract into separate dockerfile as well
 1. [ ] Allow serving static files (map asset name to filename?)
 1. [ ] Properly defer warmup pings when file isn't registered yet
-1. [ ] Persistent logs
 1. [ ] Registry UI
    1. [ ] Upload files
    1. [ ] Change permissions
