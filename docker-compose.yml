@@ -1,21 +1,33 @@
 version: "3.8"
 
 services:
-  fnregistry:
+  dfn_reg:
     build:
       dockerfile: registry.Dockerfile
       context: .
+    command: info
     volumes:
       - registry_in:/functions/registry_in
       - registry:/functions/registry
-  fnserver:
+    # logging:
+    #   driver: syslog
+    #   options:
+    #     syslog-address: "udp://logsN.papertrailapp.com:XXXXX"
+    #     tag: "dfn_reg"
+  dfn_srv:
     build:
       dockerfile: execution.Dockerfile
       context: .
+    command: info
     volumes:
       - registry:/functions/registry
     ports:
       - "8000:8000"
+    # logging:
+    #   driver: syslog
+    #   options:
+    #     syslog-address: "udp://logsN.papertrailapp.com:XXXXX"
+    #     tag: "dfn_srv"
 
 volumes:
   registry:

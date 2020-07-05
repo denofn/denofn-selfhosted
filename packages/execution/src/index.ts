@@ -1,4 +1,4 @@
-import { getScriptRegistryInternal, logger, opine } from "../deps.ts";
+import { getScriptRegistryInternal, logger, LogLevel, opine } from "../deps.ts";
 import { checkWarmupOnStart } from "./checkWarmupOnStart.ts";
 import * as c from "./constants.ts";
 import { fetchRegistry } from "./fetchRegistry.ts";
@@ -8,12 +8,17 @@ import {
   terminateHandlerStorage,
 } from "./terminateHandler.ts";
 
+const args = Deno.args;
+logger.setLogLevel(
+  logger.levels.includes(args[0] as LogLevel) ? args[0] as LogLevel : "info",
+);
+
 const app = opine();
 const scriptHandler = registerScriptHandler(app);
 
 let registeredApps = {};
 
-const attachHandlers = (scriptName: string, port: number) => {
+const attachHandlers = (scriptName: string) => {
   const oldRegisteredApps = Object.keys(registeredApps);
 
   if (!oldRegisteredApps.includes(scriptName)) {
@@ -24,17 +29,17 @@ const attachHandlers = (scriptName: string, port: number) => {
       createTerminateHandler(c.MINUTE_IN_MS, scriptName, c.MAX_DELTA_LEN_MS),
     );
 
-    logger.script(scriptName, `Has been registered`);
+    logger.script(scriptName, `Has been registered`, "file");
     checkWarmupOnStart(internalRegistry);
   }
 };
 
 const setRegisteredApps = () => {
-  logger.system("Execution", "Checking registered scripts");
+  logger.system("Execution", "Checking registered scripts", "verbose");
   const newRegisteredApps = fetchRegistry();
 
-  for (const [scriptName, port] of Object.entries(newRegisteredApps)) {
-    attachHandlers(scriptName, port);
+  for (const [scriptName] of Object.entries(newRegisteredApps)) {
+    attachHandlers(scriptName);
   }
 
   registeredApps = newRegisteredApps;
@@ -43,5 +48,5 @@ const setRegisteredApps = () => {
 setRegisteredApps();
 setInterval(setRegisteredApps, c.REGISTRY_CHECK_INTERVAL);
 
-logger.system("Execution", `Serving on port ${8000}`);
+logger.system("Execution", `Serving on port ${8000}`, "info");
 app.listen(8000);

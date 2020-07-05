@@ -16,7 +16,7 @@ It's currently running stable locally on UNIX development machines and on a Digi
 
 Take a look at the [Todos](#todos) for what's next for denoFn.
 
-## Local development/contribution
+## Local development/contributing
 
 ### Prerequisites
 
@@ -79,24 +79,34 @@ export default createHandler((_) => "Hello, world");
 - `whitelist`: all domains that are allowed for `--allow-net`
 - `warmupOnStart`: will bootstrap your function immediately upon docker initialization. This is still a bit flaky as there are race conditions with registration, will be fixed soon.
 
+## Logging
+
+### Logging to papertrail
+
+Uncomment the logging section in `docker-compose.yml` and add your own logging URL.
+
+### Log levels
+
+- `verbose` logs everything
+- `info` informative logging (spawning of locks, warmup and system info, ...)
+- `file` anything related to files/processes (reading/writing files, spawning/killing deno processes)
+
+#### Setting loglevels
+
+You can set the log level under the `command` section in `docker-compose.yml` for each container. Passing non-accepted variables result in logging defaulting to `info`.
+
 ## Todos
 
-1. [ ] extract orchestration layer to separate module
-   1. [ ] try toAsyncIterator for spawning deno processes
-   1. [ ] spawning and killing shouldn't exist "inside" execution layer
-   1. [ ] potentially extract into separate dockerfile as well
-1. [ ] Allow serving static files (map asset name to filename?)
-1. [ ] Properly defer warmup pings when file isn't registered yet
-1. [ ] Persistent logs
-1. [ ] Registry UI
-   1. [ ] Upload files
-   1. [ ] Change permissions
-   1. [ ] Remove registration via mounted volume
-   1. [ ] Refresh code
-1. [ ] Monitoring dashboard UI
-1. [ ] Lib improvements
-   1. [ ] Opine is quite messy in implementation (see registerScriptHandler.ts)
-   1. [ ] Publish script for packages (versioned release)
+1. Store hashes to reload files
+1. Testing
+1. Registry UI
+   1. Upload files
+   1. Change permissions
+   1. Remove registration via mounted volume
+   1. Refresh code
+1. Monitoring dashboard UI
+1. Lib improvements
+   1. Opine is quite messy in implementation (see registerScriptHandler.ts)
+   1. Publish script for packages (versioned release)
       - All packages on tag denofn@1.0.0 will have its sibling packages as denofn@1.0.0 in their respective deps.ts file
       - When performing new development, the same script should reset these dependencies to @main/feature-branch or PWD as target
-   1. [ ] Testing

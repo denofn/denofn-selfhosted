@@ -1,7 +1,6 @@
 import {
   logger,
   opine,
-  proxyUrl,
   RegistryJSONInternal,
   UUID,
 } from "../deps.ts";
@@ -9,28 +8,25 @@ import * as c from "./constants.ts";
 import * as db from "./db.ts";
 import { handleProxy } from "./handleProxy.ts";
 import { spawn } from "./spawn.ts";
-import {
-  waitAndCheckHasBeenWarmedUp,
-  warmup as warmupFunction,
-} from "./warmup.ts";
+import { waitAndCheckHasBeenWarmedUp } from "./warmup.ts";
 
 export const registerScriptHandler = (app: ReturnType<typeof opine>) =>
   (registry: RegistryJSONInternal) => {
     const { name: scriptName, port } = registry;
     app.use(`/${scriptName}`, async (req, res, next) => {
-      let lockStarted;
+      let lockStart;
       const lock = UUID.generate();
       const has = db.has(scriptName);
 
       if (!has || (has && !db.get(scriptName)?.process)) {
-        lockStarted = await scenario1(registry, lock);
+        lockStart = await scenario1(registry, lock);
       } else if (
         has && !db.get(scriptName)?.process && db.isLocked(scriptName)
       ) {
         await scenario2(scriptName);
       }
 
-      handleProxy(scriptName, port, lock, lockStarted)(req, res, next);
+      handleProxy(scriptName, port, lock, lockStart)(req, res, next);
     });
   };
 
@@ -45,20 +41,19 @@ export async function scenario1(
   lock: string,
 ) {
   db.createLock(registry.name, lock); // Also creates entry if non-existent
-  const now = Date.now();
+  const lockStart = Date.now();
 
-  const { name: scriptName, port } = registry;
-  logger.system("Execution", `Spawning new ${scriptName} instance`);
+  const { name: scriptName } = registry;
+  logger.system("Execution", `Spawning new ${scriptName} instance`, "file");
 
   const { pid: process } = await spawn(registry);
-  const [warmup, started] = await warmupFunction(scriptName, proxyUrl(port));
 
   db.set(
     scriptName,
-    { process, started, warmup, warmedUp: true },
+    { process, started: Date.now(), warmedUp: true },
   );
 
-  return now;
+  return lockStart;
 }
 
 async function scenario2(scriptName: string) {

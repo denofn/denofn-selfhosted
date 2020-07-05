@@ -8,18 +8,18 @@ const terminateHandler = (
   scriptName: string,
   configuredDelta: number,
 ) => {
-  logger.script(scriptName, "Determining idle state");
+  logger.script(scriptName, "Determining idle state", "verbose");
   const dbEntry = db.get(scriptName);
   if (
     typeof dbEntry?.process === "undefined" && !db.isLocked(scriptName)
   ) {
-    logger.noTermination(scriptName, `Script is cold, skipping`);
+    logger.fail(scriptName, `Script is cold, skipping`, "info");
   } else if (
     (Date.now() - (db.get(scriptName)?.started as number)) > configuredDelta
   ) {
     killProcess(scriptName);
-    logger.terminationSuccess(scriptName, `Terminated due to idle`);
-  } else logger.noTermination(scriptName, `Script is not idle, skipping`);
+    logger.success(scriptName, `Terminated due to idle`, "file");
+  } else logger.fail(scriptName, `Script is not idle, skipping`, "info");
 };
 
 export const createTerminateHandler = (

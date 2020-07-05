@@ -1,36 +1,33 @@
 import { Colors } from "../../../deps.ts";
+import { LogLevel, LogSystem } from "./types.ts";
 
-// TODO: add layer to persist to file
+let logLevel: LogLevel = "info";
 
-export const script = (scriptName: string, message: string) =>
-  console.log(
-    Colors.yellow(`[${scriptName}]`.padEnd(20)),
-    message.padStart(60),
-  );
+export const levels: LogLevel[] = ["info", "file", "verbose"];
 
-export const system = (
-  systemNameSpace: "Execution" | "Registry",
-  lockInfo: string,
-) =>
-  console.log(
-    Colors.blue(`[${systemNameSpace}]`.padEnd(20)),
-    lockInfo.padStart(60),
-  );
+export const setLogLevel = (l: LogLevel) => {
+  logLevel = l;
+};
 
-export const terminationSuccess = (
-  scriptName: string,
-  terminationSuccessMessage: string,
-) =>
-  console.log(
-    Colors.green(`[${scriptName}]`.padEnd(20)),
-    terminationSuccessMessage.padStart(60),
-  );
+const log = (tag: string, message: string, level: LogLevel) => {
+  switch (logLevel) {
+    case "file":
+      if (level === "info") return;
+    case "info":
+      if (level === "verbose") return;
+    case "verbose":
+      console.log(tag.padEnd(20), message.padStart(60));
+  }
+};
 
-export const noTermination = (
-  scriptName: string,
-  noTerminationMessage: string,
-) =>
-  console.log(
-    Colors.red(`[${scriptName}]`.padEnd(20)),
-    noTerminationMessage.padStart(60),
-  );
+export const script = (scriptName: string, message: string, level: LogLevel) =>
+  log(Colors.yellow(`[${scriptName}]`), message, level);
+
+export const system = (tag: LogSystem, message: string, level: LogLevel) =>
+  log(Colors.blue(`[${tag}]`), message, level);
+
+export const success = (tag: string, message: string, level: LogLevel) =>
+  log(Colors.green(`[${tag}]`), message, level);
+
+export const fail = (tag: string, message: string, level: LogLevel) =>
+  log(Colors.red(`[${tag}]`), message, level);

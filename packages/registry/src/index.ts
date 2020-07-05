@@ -1,4 +1,4 @@
-import { appendCwd, dirExists, logger } from "../deps.ts";
+import { appendCwd, dirExists, logger, LogLevel } from "../deps.ts";
 import { assignPortInRegistry } from "./assignPort.ts";
 import { bundle } from "./bundle.ts";
 import { getPortsRegistry } from "./registry.ts";
@@ -10,9 +10,11 @@ if (!dirExists(registryIntake)) {
 }
 
 const args = Deno.args;
-const isSilent = args.includes("silent");
+logger.setLogLevel(
+  logger.levels.includes(args[0] as LogLevel) ? args[0] as LogLevel : "info",
+);
 
-async function checkRegistry(silent?: boolean) {
+async function checkRegistry() {
   const portsRegistry = getPortsRegistry();
   const scripts = Object.keys(portsRegistry);
   const scriptsInRegistryIntake = [];
@@ -21,8 +23,11 @@ async function checkRegistry(silent?: boolean) {
     if (e.isDirectory && !scripts.includes(e.name)) {
       scriptsInRegistryIntake.push(e.name);
     } else {
-      !silent &&
-        logger.system("Registry", `Skipping ${e.name}, already registered`);
+      logger.system(
+        "Registry",
+        `Skipping ${e.name}, already registered`,
+        "verbose",
+      );
     }
   }
 
@@ -38,4 +43,4 @@ async function checkRegistry(silent?: boolean) {
 
 // Always verbose on first run
 await checkRegistry();
-setInterval(() => checkRegistry(isSilent), 30_000);
+setInterval(() => checkRegistry(), 30_000);

@@ -22,7 +22,7 @@ export const bundle = async (scriptName: string, portName: number) => {
   try {
     await runBundle(toBundlePath, appendCwd(`/registry/${scriptName}.js`))
       .status();
-    logger.system("Registry", `Successfully registered ${scriptName}`);
+    logger.system("Registry", `Successfully registered ${scriptName}`, "file");
   } finally {
     // Clean up
     Deno.removeSync(toBundlePath);

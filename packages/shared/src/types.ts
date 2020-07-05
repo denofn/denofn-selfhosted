@@ -9,3 +9,6 @@ export type RegistryJSONInternal = RegistryJSON & {
 };
 
 export type RegistryKV = Record<string, number>;
+
+export type LogLevel = "info" | "verbose" | "file";
+export type LogSystem = "Execution" | "Registry";
