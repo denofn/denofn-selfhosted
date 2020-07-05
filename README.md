@@ -21,7 +21,7 @@ Take a look at the [Todos](#todos) for what's next for denoFn.
 ### Prerequisites
 
 - Docker (and docker-compose)
-- Deno v1.1.1 and above
+- The latest version of Deno is installed inside the Docker containers
 - VSCode will prompt you to install specific extensions, it is advised to at least install the Deno extension
 
 _NOTE: further instructions are written towards UNIX systems since .sh scripts are used. But this probably all works on Windows as well._
@@ -62,10 +62,10 @@ This will map in `registry` to
 ```ts
 import { createHandler } from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0-rc.2/packages/micro/mod.ts";
 
-export default createHandler((_) => "Hello, world");
+export default createHandler(async (_) => "Hello, world");
 ```
 
-`createHandler` gives you a Request object and requires a string or Response object. See typings in `src/micro/mod.ts`.
+`createHandler` gives you a Request object and requires a string or Response object. See typings in `packages/micro/mod.ts`. Handlers must _always_ be async.
 
 ### registry.json
 
