@@ -2,6 +2,7 @@ import { compareWithNow, logger } from "../deps.ts";
 
 type DbEntry = {
   process?: number;
+  resource?: number;
   warmedUp: boolean;
   started?: number;
   locks: Set<string>;

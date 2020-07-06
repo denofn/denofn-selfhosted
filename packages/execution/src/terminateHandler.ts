@@ -4,7 +4,8 @@ import { killProcess } from "./killProcess.ts";
 
 export const terminateHandlerStorage = new Set<ReturnType<typeof setTimeout>>();
 
-const terminateHandler = (
+// ONLY EXPORTED FOR TESTING!
+export const terminateHandler = (
   scriptName: string,
   configuredDelta: number,
 ) => {

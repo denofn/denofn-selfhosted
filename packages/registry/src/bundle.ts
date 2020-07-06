@@ -3,7 +3,7 @@ import { appendCwd, dirExists, logger } from "../deps.ts";
 const toReplaceId = `%SCRIPT_NAME%`;
 const toReplacePortId = `%PORT%`;
 
-export const bundle = async (scriptName: string, portName: number) => {
+export const bundle = async (scriptName: string, port: number) => {
   const toBundlePath = appendCwd(`/toBundle.ts`);
 
   if (!dirExists(appendCwd(`/registry_in/${scriptName}`))) {
@@ -14,14 +14,16 @@ export const bundle = async (scriptName: string, portName: number) => {
     appendCwd(`/packages/templates/bundle.ts`),
   ).replaceAll(toReplaceId, scriptName).replaceAll(
     toReplacePortId,
-    `${portName}`,
+    `${port}`,
   );
 
   Deno.writeTextFileSync(toBundlePath, bundlerFile);
 
   try {
-    await runBundle(toBundlePath, appendCwd(`/registry/${scriptName}.js`))
-      .status();
+    const p = runBundle(toBundlePath, appendCwd(`/registry/${scriptName}.js`));
+    await p.status();
+    p.close();
+
     logger.system("Registry", `Successfully registered ${scriptName}`, "file");
   } finally {
     // Clean up
