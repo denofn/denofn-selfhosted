@@ -103,7 +103,7 @@ run_deno_test()
     then
       echo "[packages/execution]";
       echo "--------------------";
-      cd $c/fixtures/dfn_srv && deno test --allow-run --allow-read --allow-write ../../packages/execution;
+      cd $c/fixtures/dfn_srv && deno test --unstable --allow-run --allow-read --allow-write ../../packages/execution;
       clean_up_fixtures;
   fi
 }

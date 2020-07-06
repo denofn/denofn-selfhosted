@@ -1,7 +1,12 @@
-import { getScriptRegistryInternal, logger, LogLevel, opine } from "../deps.ts";
+import {
+  getPortsRegistry,
+  getScriptRegistryInternal,
+  logger,
+  LogLevel,
+  opine,
+} from "../deps.ts";
 import { checkWarmupOnStart } from "./checkWarmupOnStart.ts";
 import * as c from "./constants.ts";
-import { fetchRegistry } from "./fetchRegistry.ts";
 import { registerScriptHandler } from "./registerScriptHandler.ts";
 import {
   createTerminateHandler,
@@ -36,7 +41,7 @@ const attachHandlers = (scriptName: string) => {
 
 const setRegisteredApps = () => {
   logger.system("Execution", "Checking registered scripts", "verbose");
-  const newRegisteredApps = fetchRegistry();
+  const newRegisteredApps = getPortsRegistry();
 
   for (const [scriptName] of Object.entries(newRegisteredApps)) {
     attachHandlers(scriptName);

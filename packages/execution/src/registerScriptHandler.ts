@@ -46,11 +46,14 @@ export async function scenario1(
   const { name: scriptName } = registry;
   logger.system("Execution", `Spawning new ${scriptName} instance`, "file");
 
-  const { pid: process } = await spawn(registry);
+  const { pid: process, rid: resource, stdout }: Deno.Process<
+    { cmd: string[]; stdout: "piped" }
+  > = await spawn(registry);
+  stdout.close();
 
   db.set(
     scriptName,
-    { process, started: Date.now(), warmedUp: true },
+    { process, resource, started: Date.now(), warmedUp: true },
   );
 
   return lockStart;
