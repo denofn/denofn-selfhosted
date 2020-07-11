@@ -3,10 +3,14 @@ export type RegistryJSON = {
   warmupOnStart?: boolean;
 };
 
-export type RegistryJSONInternal = RegistryJSON & {
+export type PartialInternalRegistry = {
   name: string;
   port: number;
+  hashes: string[];
 };
+
+export type RegistryJSONInternal = RegistryJSON & PartialInternalRegistry;
+export type ScriptRegistryIntake = [string, string[]][];
 
 export type RegistryKV = Record<string, number>;
 

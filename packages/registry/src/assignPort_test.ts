@@ -1,47 +1,28 @@
 import { assertEquals, assertThrows } from "./testing/deps.ts";
-import {
-  addPortsRegistry,
-  removePortsRegistry,
-  writeRegistryJson,
-  writeRegistryScriptFolder,
-  removeAllScriptRelatedFiles,
-} from "./testing/fixtures.ts";
-import { assignPortInRegistry, basePort, maxPort } from "./assignPort.ts";
-import { getScriptRegistryInternal, getPortsRegistry } from "./registry.ts";
+import { addPortsRegistry, removePortsRegistry } from "./testing/fixtures.ts";
+import { assignPort, basePort, maxPort } from "./assignPort.ts";
 
 Deno.test("should assign basePort when no other scripts are present", () => {
-  writeRegistryScriptFolder("test");
-  writeRegistryJson("test", `{"whitelist":[]}`);
+  const port = assignPort("test");
 
-  assignPortInRegistry("test");
-  assertEquals(
-    getScriptRegistryInternal("test"),
-    { whitelist: [], name: "test", port: basePort },
-  );
-
-  removeAllScriptRelatedFiles("test");
+  assertEquals(port, basePort);
+  removePortsRegistry();
 });
 
 Deno.test("should assign bumped port when other scripts are present", () => {
   addPortsRegistry(`{"test":${basePort}}`);
-  writeRegistryScriptFolder("test2");
-  writeRegistryJson("test2", `{"whitelist":[]}`);
 
-  assignPortInRegistry("test2");
-  assertEquals(
-    getScriptRegistryInternal("test2"),
-    { whitelist: [], name: "test2", port: basePort + 1 },
-  );
-  assertEquals(getPortsRegistry(), { test: basePort, test2: basePort + 1 });
+  const port = assignPort("test2");
 
-  removeAllScriptRelatedFiles("test2");
+  assertEquals(port, basePort + 1);
+  removePortsRegistry();
 });
 
 Deno.test("should throw error when maxPort is reached", () => {
   addPortsRegistry(`{"test":${maxPort}}`);
 
   assertThrows(() => {
-    assignPortInRegistry("test2");
+    assignPort("test2");
   });
 
   removePortsRegistry();

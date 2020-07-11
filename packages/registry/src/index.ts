@@ -1,7 +1,6 @@
 import { appendCwd, dirExists, logger, LogLevel } from "../deps.ts";
-import { assignPortInRegistry } from "./assignPort.ts";
-import { bundle } from "./bundle.ts";
-import { getPortsRegistry } from "./registry.ts";
+import { hashIngestedScripts } from "./hashIngestedScripts.ts";
+import { persistRegistryInfo } from "./persistRegistryInfo.ts";
 
 const registryIntake = appendCwd(`/registry_in`);
 
@@ -14,32 +13,10 @@ logger.setLogLevel(
   logger.levels.includes(args[0] as LogLevel) ? args[0] as LogLevel : "info",
 );
 
-async function checkRegistry() {
-  const portsRegistry = getPortsRegistry();
-  const scripts = Object.keys(portsRegistry);
-  const scriptsInRegistryIntake = [];
-
-  for (const e of Deno.readDirSync(registryIntake)) {
-    if (e.isDirectory && !scripts.includes(e.name)) {
-      scriptsInRegistryIntake.push(e.name);
-    } else {
-      logger.system(
-        "Registry",
-        `Skipping ${e.name}, already registered`,
-        "verbose",
-      );
-    }
-  }
-
-  for (let i = 0; i < scriptsInRegistryIntake.length; i++) {
-    const dirName = scriptsInRegistryIntake[i];
-    const packageRegistry = assignPortInRegistry(dirName);
-
-    if (packageRegistry?.name && packageRegistry?.port) {
-      await bundle(packageRegistry.name, packageRegistry.port);
-    }
-  }
-}
+const checkRegistry = async () => {
+  const hashedScripts = hashIngestedScripts(registryIntake);
+  await persistRegistryInfo(hashedScripts);
+};
 
 await checkRegistry();
 setInterval(() => checkRegistry(), 30_000);
