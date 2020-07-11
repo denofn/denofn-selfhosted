@@ -5,6 +5,7 @@ import {
   RegistryJSONInternal,
   RegistryKV,
 } from "../deps.ts";
+import { PartialInternalRegistry } from "../../shared/mod.ts";
 
 export const REGISTRY_PORTS_PATH = appendCwd("registry/ports.json");
 
@@ -37,18 +38,16 @@ export const getScriptRegistry = (scriptName: string): RegistryJSON => {
 };
 
 export const setScriptRegistry = (
-  scriptName: string,
-  port: number,
+  rji: PartialInternalRegistry,
   rj: RegistryJSON,
 ): RegistryJSONInternal => {
   const internalRegistry: RegistryJSONInternal = {
     ...rj,
-    name: scriptName,
-    port,
+    ...rji,
   };
 
   Deno.writeTextFileSync(
-    appendCwd(`/registry/${scriptName}.json`),
+    appendCwd(`/registry/${rji.name}.json`),
     JSON.stringify(internalRegistry),
   );
 

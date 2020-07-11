@@ -4,8 +4,9 @@ import { assertThrowsAsync, assert } from "./testing/deps.ts";
 import {
   writeRegistryScriptFolder,
   writeScript,
-  removeScript,
   removeRegistryScriptFolder,
+  removeBundle,
+  testScript,
 } from "./testing/fixtures.ts";
 
 Deno.test("should throw when no script directory present", async () => {
@@ -18,34 +19,12 @@ Deno.test("should bundle test script to js file in registry", async () => {
   writeRegistryScriptFolder("test");
   writeScript(
     "test",
-    `import {
-  createHandler,
-  Handler,
-} from "../../packages/micro/mod.ts";
-
-const handler: Handler = async (_) => {
-  try {
-    const data = await fetch(\`https://swapi.dev/api/people/1\`);
-    const result = await data.json();
-    return {
-      headers: new Headers({
-        "Content-Type": "application/json",
-      }),
-      body: JSON.stringify(result),
-      status: 200,
-    };
-  } catch {
-    return \`Something happened, don't know what.\`;
-  }
-};
-
-export default createHandler(handler);
-`,
+    testScript,
   );
 
   await bundle("test", 4000);
   assert(fileExists(appendCwd(`/registry/test.js`)));
 
-  removeScript("test");
   removeRegistryScriptFolder("test");
+  removeBundle("test");
 });

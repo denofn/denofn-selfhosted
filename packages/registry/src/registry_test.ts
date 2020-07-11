@@ -50,17 +50,19 @@ Deno.test("should return parsed registry", () => {
     { name: "test", whitelist: [] },
   );
 
-  removeRegistryJson("test");
   removeRegistryScriptFolder("test");
   removeInternalRegistryJson("test");
 });
 
 Deno.test("should create registry with proper data", () => {
-  setScriptRegistry("test", 4000, { whitelist: [] });
+  setScriptRegistry(
+    { name: "test", port: 4000, hashes: [] },
+    { whitelist: [] },
+  );
 
   assertEquals(
     getScriptRegistryInternal("test"),
-    { whitelist: [], name: "test", port: 4000 },
+    { whitelist: [], name: "test", port: 4000, hashes: [] },
   );
 
   removeInternalRegistryJson("test");

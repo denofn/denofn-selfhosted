@@ -16,7 +16,7 @@ export const writeRegistryScriptFolder = (scriptName: string) =>
   Deno.mkdirSync(appendCwd(`/registry_in/${scriptName}`));
 
 export const removeRegistryScriptFolder = (scriptName: string) =>
-  Deno.removeSync(appendCwd(`/registry_in/${scriptName}`));
+  Deno.removeSync(appendCwd(`/registry_in/${scriptName}`), { recursive: true });
 
 export const writeRegistryJson = (scriptName: string, data: string) =>
   Deno.writeTextFileSync(
@@ -42,3 +42,39 @@ export const writeScript = (scriptName: string, data: string) =>
 
 export const removeScript = (scriptName: string) =>
   Deno.removeSync(appendCwd(`/registry_in/${scriptName}/index.ts`));
+
+export const removeBundle = (scriptName: string) =>
+  Deno.removeSync(appendCwd(`/registry/${scriptName}.js`));
+
+export const writeSymlink = (oldpath: string, newpath: string) =>
+  Deno.symlinkSync(
+    appendCwd(`/registry_in/${oldpath}`),
+    appendCwd(`/registry_in/${newpath}`),
+  );
+
+export const removeSymlink = (path: string) =>
+  Deno.removeSync(appendCwd(`/registry_in/${path}`));
+
+export const testScript = `import {
+  createHandler,
+  Handler,
+} from "../../packages/micro/mod.ts";
+
+const handler: Handler = async (_) => {
+  try {
+    const data = await fetch(\`https://swapi.dev/api/people/1\`);
+    const result = await data.json();
+    return {
+      headers: new Headers({
+        "Content-Type": "application/json",
+      }),
+      body: JSON.stringify(result),
+      status: 200,
+    };
+  } catch {
+    return \`Something happened, don't know what.\`;
+  }
+};
+
+export default createHandler(handler);
+`;

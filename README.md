@@ -113,8 +113,6 @@ You can set the log level under the `command` section in `docker-compose.yml` fo
 
 ## Todos
 
-1. Store hashes to reload files
-1. Testing
 1. Registry UI
    1. Upload files
    1. Change permissions

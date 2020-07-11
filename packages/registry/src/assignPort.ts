@@ -1,47 +1,21 @@
-import { RegistryJSONInternal, sortNumbers } from "../deps.ts";
-import {
-  getPortsRegistry,
-  getScriptRegistry,
-  setPortsRegistry,
-  setScriptRegistry,
-} from "./registry.ts";
+import { sortNumbers } from "../deps.ts";
+import { getPortsRegistry } from "./registry.ts";
 
 export const basePort = 4000;
 export const maxPort = 4999;
 
-export const assignPortInRegistry = (scriptName: string) => {
+export const assignPort = (name: string) => {
   const portsRegistry = getPortsRegistry();
   const highestPortInRegistry = Object.values(portsRegistry).sort(sortNumbers)
     .pop();
   const nextPort = highestPortInRegistry ? highestPortInRegistry + 1 : basePort;
+  const port = portsRegistry[name] ?? nextPort;
 
-  if (nextPort > maxPort) {
+  if (port > maxPort) {
     throw new Error(
       `Highest amount of available functions achieved. Please remove some applications to create new ones`,
     );
   }
 
-  return persistToFile(scriptName, nextPort, portsRegistry);
+  return port;
 };
-
-function persistToFile(
-  scriptName: string,
-  nextPort: number,
-  registry: Record<string, number>,
-): RegistryJSONInternal {
-  const scripts = Object.keys(registry);
-
-  if (!scripts.includes(scriptName)) {
-    const packageRegistry = setScriptRegistry(
-      scriptName,
-      nextPort,
-      getScriptRegistry(scriptName),
-    );
-
-    setPortsRegistry(
-      { ...registry, ...{ [scriptName]: nextPort } },
-    );
-
-    return packageRegistry;
-  } else return {} as RegistryJSONInternal;
-}

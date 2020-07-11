@@ -95,7 +95,7 @@ run_deno_test()
     then
       echo "[packages/registry]";
       echo "-------------------";
-      cd $c/fixtures/dfn_reg && deno test --allow-net --allow-run --allow-read --allow-write ../../packages/registry;
+      cd $c/fixtures/dfn_reg && deno test --unstable --allow-net --allow-run --allow-read --allow-write ../../packages/registry;
       clean_up_fixtures;
   fi
 
