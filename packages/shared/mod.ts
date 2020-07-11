@@ -5,6 +5,7 @@ export * as logger from "./src/logger.ts";
 export * from "./src/path.ts";
 export * from "./src/pingServer.ts";
 export * from "./src/proxyUrl.ts";
+export * from "./src/reservedNames.ts";
 export * from "./src/sortNumbers.ts";
 export * from "./src/types.ts";
 export * from "./src/wait.ts";

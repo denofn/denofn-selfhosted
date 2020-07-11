@@ -1,4 +1,10 @@
-import { appendCwd, logger } from "../deps.ts";
+import {
+  appendCwd,
+  dirExists,
+  fileExists,
+  logger,
+  reservedNames,
+} from "../deps.ts";
 import { basePort } from "./assignPort.ts";
 import { hashIngestedScripts } from "./hashIngestedScripts.ts";
 import { assertEquals } from "./testing/deps.ts";
@@ -26,8 +32,7 @@ Deno.test("should skip files on registry top level", () => {
   Deno.writeTextFileSync(appendCwd("/registry_in/test.txt"), ``);
 
   assertEquals(hashIngestedScripts(registryIntake).length, 0);
-
-  Deno.removeSync(appendCwd("/registry_in/test.txt"));
+  assertEquals(fileExists(appendCwd("/registry_in/test.txt")), false);
 });
 
 Deno.test("should skip empty folders", () => {
@@ -37,6 +42,15 @@ Deno.test("should skip empty folders", () => {
   assertWithCleanup(`No files in test, skipping`);
 
   removeRegistryScriptFolder("test");
+});
+
+Deno.test("should remove folders named after reserved names", () => {
+  reservedNames.forEach((n) => writeRegistryScriptFolder(n));
+
+  assertEquals(hashIngestedScripts(registryIntake).length, 0);
+  reservedNames.forEach((n) =>
+    assertEquals(dirExists(appendCwd(`/registry_in/${n}`)), false)
+  );
 });
 
 Deno.test("should hash files", () => {
