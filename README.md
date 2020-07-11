@@ -57,7 +57,6 @@ You can run them separately by adding the package name as a second argument (cur
 Testing the bundling part of `registry` depends on `packages/micro` and `packages/templates` to be provided.
 
 Running `./denofn.sh test update` will copy the latest versions of those source files to `fixtures/dfn_reg` so the tests can run.
-TODO: investigate mocking these files in the future.
 
 If functionality has been updated, do update fixtures first as a precaution.
 
@@ -110,17 +109,3 @@ Uncomment the logging section in `docker-compose.yml` and add your own logging U
 #### Setting loglevels
 
 You can set the log level under the `command` section in `docker-compose.yml` for each container. Passing non-accepted variables result in logging defaulting to `info`.
-
-## Todos
-
-1. Registry UI
-   1. Upload files
-   1. Change permissions
-   1. Remove registration via mounted volume
-   1. Refresh code
-1. Monitoring dashboard UI
-1. Lib improvements
-   1. Opine is quite messy in implementation (see registerScriptHandler.ts)
-   1. Publish script for packages (versioned release)
-      - All packages on tag denofn@1.0.0 will have its sibling packages as denofn@1.0.0 in their respective deps.ts file
-      - When performing new development, the same script should reset these dependencies to @main/feature-branch or PWD as target

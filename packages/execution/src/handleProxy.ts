@@ -12,7 +12,6 @@ export const handleProxy = (
 
     const newStarted = Date.now(); // instantiate where the actual request is started
 
-    // TODO: properly handle in a routing library (shared between execution and scripts)
     proxy(
       proxyUrl(port),
       {
