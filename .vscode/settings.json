@@ -11,5 +11,6 @@
   },
   "[typescript]": {
     "editor.formatOnSave": false
-  }
+  },
+  "git.ignoreLimitWarning": true
 }
