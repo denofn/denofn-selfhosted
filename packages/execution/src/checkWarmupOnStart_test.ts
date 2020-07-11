@@ -10,6 +10,7 @@ const registry: RegistryJSONInternal = {
   port: 4000,
   warmupOnStart: true,
   whitelist: [],
+  hashes: [],
 };
 
 Deno.test("should wait for creation before warming up", async () => {
