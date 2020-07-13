@@ -5,3 +5,4 @@ registry_in
 !fixtures/**/registry_in
 toBundle.ts
 .DS_Store
+node_modules/
