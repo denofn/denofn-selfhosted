@@ -64,9 +64,8 @@ log()
 
 update_packages_fixtures()
 {
-  cp packages/templates/bundle.ts fixtures/dfn_reg/packages/templates/bundle.ts;
-  cp packages/micro/mod.ts fixtures/dfn_reg/packages/micro/mod.ts;
-  cp packages/micro/deps.ts fixtures/dfn_reg/packages/micro/deps.ts;
+  cp -R packages/templates fixtures/dfn_reg/packages;
+  cp -R packages/micro fixtures/dfn_reg/packages;
 }
 
 clean_up_fixtures()
@@ -88,7 +87,7 @@ run_deno_test()
     then
       echo "[packages/shared]";
       echo "-----------------";
-      deno test --allow-read packages/shared;
+      deno test --unstable --allow-read packages/shared;
   fi
 
   if [ -z $1 ] || [ $1 = "registry" ]
