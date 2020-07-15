@@ -13,19 +13,19 @@ jobs:
 
       - name: store version in .env
         run: |
-          echo "DENO_VERSION=v$(cat DENO_VERSION)" > .env
+          echo "VERSION=v$(cat DENO_VERSION)" > .env
 
-      - id: dotenv
-        uses: falti/dotenv-action@v0.2.4
+      - uses: falti/dotenv-action@v0.2.4
+        id: dotenv
+
+      - run: |
+          echo ${{ steps.dotenv.outputs.version }}
 
       - uses: denolib/setup-deno@v2
         with:
-          deno-version: ${{ steps.dotenv.output.deno_version }}
+          deno-version: ${{ steps.dotenv.outputs.version }}
 
-      - name: echo deno version to test
+      - name: Run tests
         run: |
-          deno --version
-      # - name: Run tests
-      #   run: |
-      #     ./denofn.sh test reload
-      #     ./denofn.sh test
+          ./denofn.sh test reload
+          ./denofn.sh test
