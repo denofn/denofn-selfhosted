@@ -4,6 +4,7 @@
 </p>
 <p align="center">Self hosted FaaS provider, made with Deno and Docker.</p>
 <p align="center">
+   <img src="https://img.shields.io/github/workflow/status/jeroenptrs/denoFn/Run%20deno%20tests/main?label=tests" />
    <img src="https://img.shields.io/github/v/tag/jeroenptrs/denoFn?label=latest" />
    <img src="https://img.shields.io/github/workflow/status/jeroenptrs/denoFn/Publish%20deno-alpine/main?label=deno-alpine%201.2.0" />
 </p>
