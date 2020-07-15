@@ -9,12 +9,11 @@ import {
   writeRegistryScriptFolder,
   writeScript,
 } from "../../testing/mod.ts";
-
 import { appendCwd, fileExists } from "../deps.ts";
 import { basePort } from "./assignPort.ts";
 import { hashIngestedScripts } from "./hashIngestedScripts.ts";
 import { persistRegistryInfo } from "./persistRegistryInfo.ts";
-import { getScriptRegistryInternal, getPortsRegistry } from "./registry.ts";
+import { getPortsRegistry, getScriptRegistryInternal } from "./registry.ts";
 
 Deno.test("should follow the entire registry flow", async () => {
   writeRegistryScriptFolder("test");

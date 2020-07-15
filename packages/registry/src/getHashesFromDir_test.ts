@@ -5,7 +5,6 @@ import {
   writeScript,
   writeSymlink,
 } from "../../testing/mod.ts";
-
 import { getHashesFromDir } from "./getHashesFromDir.ts";
 
 Deno.test("shouldn't do anything with empty folders", () => {

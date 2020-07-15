@@ -1,5 +1,5 @@
-import { appendCwd, fileExists, RegistryJSON, RegistryJSONInternal, RegistryKV } from "../deps.ts";
 import { PartialInternalRegistry } from "../../shared/mod.ts";
+import { appendCwd, fileExists, RegistryJSON, RegistryJSONInternal, RegistryKV } from "../deps.ts";
 
 export const REGISTRY_PORTS_PATH = appendCwd("registry/ports.json");
 

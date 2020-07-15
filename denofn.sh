@@ -90,6 +90,13 @@ run_deno_test()
       deno test --unstable --allow-read packages/shared;
   fi
 
+  if [ -z $1 ] || [ $1 = "micro" ]
+    then
+      echo "[packages/micro]";
+      echo "---------------";
+      deno test --unstable --allow-read --allow-net packages/micro;
+  fi
+
   if [ -z $1 ] || [ $1 = "registry" ]
     then
       echo "[packages/registry]";
@@ -150,7 +157,7 @@ if [ $1 = "log" ]
 fi
 
 if [ $1 = "test" ]
-  # $2 is empty or shared | registry | execution | update
+  # $2 is empty or shared | registry | execution | micro | update
   then
     run_deno_test $2;
 fi

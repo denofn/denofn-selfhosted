@@ -1,5 +1,4 @@
 import { assert, removeBundle, writeBundle } from "../../testing/mod.ts";
-
 import { RegistryJSONInternal } from "../deps.ts";
 import { checkWarmupOnStart } from "./checkWarmupOnStart.ts";
 import * as db from "./db.ts";
