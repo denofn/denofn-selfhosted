@@ -1,9 +1,9 @@
+import { assert, removeBundle, writeBundle } from "../../testing/mod.ts";
+
 import { RegistryJSONInternal } from "../deps.ts";
 import { checkWarmupOnStart } from "./checkWarmupOnStart.ts";
 import * as db from "./db.ts";
 import { killProcess } from "./killProcess.ts";
-import { assert } from "./testing/deps.ts";
-import { removeScript, writeScript } from "./testing/fixtures.ts";
 
 const registry: RegistryJSONInternal = {
   name: "test",
@@ -15,14 +15,14 @@ const registry: RegistryJSONInternal = {
 
 Deno.test("should wait for creation before warming up", async () => {
   setTimeout(() => {
-    writeScript("test", "");
+    writeBundle("test", "");
   }, 500);
 
   await checkWarmupOnStart(registry);
   assert(db.isWarmedUp("test"));
 
   killProcess("test");
-  removeScript("test");
+  removeBundle("test");
 });
 
 Deno.test("should bail on warming up", async () => {

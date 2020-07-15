@@ -1,19 +1,22 @@
 import {
   logger,
-  opine,
+  proxy,
+  proxyUrl,
+  Router,
+  Request,
+  Response,
   RegistryJSONInternal,
   UUID,
 } from "../deps.ts";
 import * as c from "./constants.ts";
 import * as db from "./db.ts";
-import { handleProxy } from "./handleProxy.ts";
 import { spawn } from "./spawn.ts";
 import { waitAndCheckHasBeenWarmedUp } from "./warmup.ts";
 
-export const registerScriptHandler = (app: ReturnType<typeof opine>) =>
+export const registerScriptHandler = (app: Router) =>
   (registry: RegistryJSONInternal) => {
     const { name: scriptName, port } = registry;
-    app.use(`/${scriptName}`, async (req, res, next) => {
+    app.use(`${scriptName}`, async (req: Request, _res: Response) => {
       let lockStart;
       const lock = UUID.generate();
       const has = db.has(scriptName);
@@ -26,7 +29,14 @@ export const registerScriptHandler = (app: ReturnType<typeof opine>) =>
         await scenario2(scriptName);
       }
 
-      handleProxy(scriptName, port, lock, lockStart)(req, res, next);
+      if (!lockStart) db.createLock(scriptName, lock);
+
+      const newStarted = Date.now();
+      const res = await proxy(proxyUrl(port))(req, _res);
+
+      db.freeLock(scriptName, lock, newStarted, lockStart);
+
+      return res;
     });
   };
 

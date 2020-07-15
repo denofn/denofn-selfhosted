@@ -1,4 +1,14 @@
 import {
+  assertEquals,
+  removeInternalRegistryJson,
+  removePortsRegistry,
+  removeRegistryScriptFolder,
+  writeInternalRegistryJson,
+  writeRegistryScriptFolder,
+  writeScript,
+} from "../../testing/mod.ts";
+
+import {
   appendCwd,
   dirExists,
   fileExists,
@@ -7,15 +17,6 @@ import {
 } from "../deps.ts";
 import { basePort } from "./assignPort.ts";
 import { hashIngestedScripts } from "./hashIngestedScripts.ts";
-import { assertEquals } from "./testing/deps.ts";
-import {
-  removeRegistryScriptFolder,
-  writeRegistryScriptFolder,
-  writeScript,
-  writeInternalRegistryJson,
-  removePortsRegistry,
-  removeInternalRegistryJson,
-} from "./testing/fixtures.ts";
 import { setPortsRegistry } from "./registry.ts";
 
 let a: string[] = [];

@@ -1,10 +1,11 @@
 import {
-  writeRegistryScriptFolder,
+  assertEquals,
   removeRegistryScriptFolder,
+  writeRegistryScriptFolder,
   writeScript,
   writeSymlink,
-} from "./testing/fixtures.ts";
-import { assertEquals } from "./testing/deps.ts";
+} from "../../testing/mod.ts";
+
 import { getHashesFromDir } from "./getHashesFromDir.ts";
 
 Deno.test("shouldn't do anything with empty folders", () => {

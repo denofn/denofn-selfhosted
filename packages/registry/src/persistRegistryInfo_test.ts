@@ -1,18 +1,19 @@
-import { appendCwd, fileExists } from "../deps.ts";
-import { basePort } from "./assignPort.ts";
 import {
-  writeRegistryScriptFolder,
-  writeScript,
-  testScript,
-  removeInternalRegistryJson,
+  assertEquals,
   removeBundle,
+  removeInternalRegistryJson,
   removePortsRegistry,
   removeRegistryScriptFolder,
+  testScript,
   writeRegistryJson,
-} from "./testing/fixtures.ts";
+  writeRegistryScriptFolder,
+  writeScript,
+} from "../../testing/mod.ts";
+
+import { appendCwd, fileExists } from "../deps.ts";
+import { basePort } from "./assignPort.ts";
 import { hashIngestedScripts } from "./hashIngestedScripts.ts";
 import { persistRegistryInfo } from "./persistRegistryInfo.ts";
-import { assertEquals } from "./testing/deps.ts";
 import { getScriptRegistryInternal, getPortsRegistry } from "./registry.ts";
 
 Deno.test("should follow the entire registry flow", async () => {

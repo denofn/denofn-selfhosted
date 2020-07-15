@@ -1,13 +1,15 @@
-import { appendCwd, fileExists } from "../deps.ts";
-import { bundle } from "./bundle.ts";
-import { assertThrowsAsync, assert } from "./testing/deps.ts";
 import {
+  assert,
+  assertThrowsAsync,
+  removeBundle,
+  removeRegistryScriptFolder,
+  testScript,
   writeRegistryScriptFolder,
   writeScript,
-  removeRegistryScriptFolder,
-  removeBundle,
-  testScript,
-} from "./testing/fixtures.ts";
+} from "../../testing/mod.ts";
+
+import { appendCwd, fileExists } from "../deps.ts";
+import { bundle } from "./bundle.ts";
 
 Deno.test("should throw when no script directory present", async () => {
   assertThrowsAsync(async () => {

@@ -3,7 +3,7 @@ import {
   getScriptRegistryInternal,
   logger,
   LogLevel,
-  opine,
+  Router,
 } from "../deps.ts";
 import { checkWarmupOnStart } from "./checkWarmupOnStart.ts";
 import * as c from "./constants.ts";
@@ -18,7 +18,7 @@ logger.setLogLevel(
   logger.levels.includes(args[0] as LogLevel) ? args[0] as LogLevel : "info",
 );
 
-const app = opine();
+const app = new Router();
 const scriptHandler = registerScriptHandler(app);
 
 let registeredApps = {};
