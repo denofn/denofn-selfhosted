@@ -1,16 +1,6 @@
 {
   "deno.enable": true,
   "editor.formatOnSave": true,
-  "emeraldwalk.runonsave": {
-    "commands": [
-      {
-        "match": "\\.ts$",
-        "cmd": "deno fmt ${file}"
-      }
-    ]
-  },
-  "[typescript]": {
-    "editor.formatOnSave": false
-  },
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "prettier.printWidth": 100
 }

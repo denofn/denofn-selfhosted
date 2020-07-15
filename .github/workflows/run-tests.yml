@@ -1,0 +1,31 @@
+name: Run deno tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: store version in .env
+        run: |
+          echo "VERSION=v$(cat DENO_VERSION)" > .env
+
+      - uses: falti/dotenv-action@v0.2.4
+        id: dotenv
+
+      - run: |
+          echo ${{ steps.dotenv.outputs.version }}
+
+      - uses: denolib/setup-deno@v2
+        with:
+          deno-version: ${{ steps.dotenv.outputs.version }}
+
+      - name: Run tests
+        run: |
+          ./denofn.sh test reload
+          ./denofn.sh test

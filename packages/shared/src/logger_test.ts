@@ -3,7 +3,7 @@ import { assertEquals } from "../../testing/mod.ts";
 import * as logger from "./logger.ts";
 
 let a = [];
-const loggingFn = (...args: any[]) => a = args;
+const loggingFn = (...args: any[]) => (a = args);
 logger.setLoggingFn(loggingFn);
 
 const assertWithCleanup = (act: number, exp: number) => {

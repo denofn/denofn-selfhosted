@@ -5,14 +5,11 @@ export const killProcess = (scriptName: string): void => {
   Deno.kill(dbEntry?.process as number, Deno.Signal.SIGINT);
   Deno.close(dbEntry?.resource as number);
 
-  db.set(
-    scriptName,
-    {
-      ...dbEntry,
-      process: undefined,
-      started: undefined,
-      warmedUp: false,
-      locks: new Set(),
-    },
-  );
+  db.set(scriptName, {
+    ...dbEntry,
+    process: undefined,
+    started: undefined,
+    warmedUp: false,
+    locks: new Set(),
+  });
 };

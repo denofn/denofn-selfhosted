@@ -19,10 +19,7 @@ Deno.test("should throw when no script directory present", async () => {
 
 Deno.test("should bundle test script to js file in registry", async () => {
   writeRegistryScriptFolder("test");
-  writeScript(
-    "test",
-    testScript,
-  );
+  writeScript("test", testScript);
 
   await bundle("test", 4000);
   assert(fileExists(appendCwd(`/registry/test.js`)));

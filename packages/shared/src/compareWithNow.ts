@@ -1,2 +1,1 @@
-export const compareWithNow = (timestamp: number): number =>
-  Date.now() - timestamp;
+export const compareWithNow = (timestamp: number): number => Date.now() - timestamp;

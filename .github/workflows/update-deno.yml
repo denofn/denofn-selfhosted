@@ -2,7 +2,7 @@ name: Update Deno
 
 on:
   schedule:
-    - cron: '0 */4 * * *'
+    - cron: "0 */4 * * *"
 
 jobs:
   build:
@@ -16,11 +16,11 @@ jobs:
           prefix: v
 
       - uses: actions/checkout@v2
-        
+
       - name: updates Deno version
         run: |
           echo "${{ steps.denoVersion.outputs.tag }}" | cut -d'v' -f 2 > DENO_VERSION
-      
+
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v2

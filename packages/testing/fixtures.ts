@@ -3,8 +3,7 @@ import { appendCwd } from "../shared/src/path.ts";
 
 export const removePortsRegistry = () => Deno.removeSync(REGISTRY_PORTS_PATH);
 
-export const addPortsRegistry = (data: string) =>
-  Deno.writeTextFileSync(REGISTRY_PORTS_PATH, data);
+export const addPortsRegistry = (data: string) => Deno.writeTextFileSync(REGISTRY_PORTS_PATH, data);
 
 export const writeInternalRegistryJson = (scriptName: string, data: string) =>
   Deno.writeTextFileSync(appendCwd(`/registry/${scriptName}.json`), data);
@@ -19,10 +18,7 @@ export const removeRegistryScriptFolder = (scriptName: string) =>
   Deno.removeSync(appendCwd(`/registry_in/${scriptName}`), { recursive: true });
 
 export const writeRegistryJson = (scriptName: string, data: string) =>
-  Deno.writeTextFileSync(
-    appendCwd(`/registry_in/${scriptName}/registry.json`),
-    data,
-  );
+  Deno.writeTextFileSync(appendCwd(`/registry_in/${scriptName}/registry.json`), data);
 
 export const removeRegistryJson = (scriptName: string) =>
   Deno.removeSync(appendCwd(`/registry_in/${scriptName}/registry.json`));
@@ -35,10 +31,7 @@ export const removeAllScriptRelatedFiles = (scriptName: string) => {
 };
 
 export const writeScript = (scriptName: string, data: string) =>
-  Deno.writeTextFileSync(
-    appendCwd(`/registry_in/${scriptName}/index.ts`),
-    data,
-  );
+  Deno.writeTextFileSync(appendCwd(`/registry_in/${scriptName}/index.ts`), data);
 
 export const removeScript = (scriptName: string) =>
   Deno.removeSync(appendCwd(`/registry_in/${scriptName}/index.ts`));
@@ -50,13 +43,9 @@ export const removeBundle = (scriptName: string) =>
   Deno.removeSync(appendCwd(`/registry/${scriptName}.js`));
 
 export const writeSymlink = (oldpath: string, newpath: string) =>
-  Deno.symlinkSync(
-    appendCwd(`/registry_in/${oldpath}`),
-    appendCwd(`/registry_in/${newpath}`),
-  );
+  Deno.symlinkSync(appendCwd(`/registry_in/${oldpath}`), appendCwd(`/registry_in/${newpath}`));
 
-export const removeSymlink = (path: string) =>
-  Deno.removeSync(appendCwd(`/registry_in/${path}`));
+export const removeSymlink = (path: string) => Deno.removeSync(appendCwd(`/registry_in/${path}`));
 
 export const testScript = `import {
   createHandler,

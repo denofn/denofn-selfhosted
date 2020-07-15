@@ -8,20 +8,14 @@ import {
   writeScript,
 } from "../../testing/mod.ts";
 
-import {
-  appendCwd,
-  dirExists,
-  fileExists,
-  logger,
-  reservedNames,
-} from "../deps.ts";
+import { appendCwd, dirExists, fileExists, logger, reservedNames } from "../deps.ts";
 import { basePort } from "./assignPort.ts";
 import { hashIngestedScripts } from "./hashIngestedScripts.ts";
 import { setPortsRegistry } from "./registry.ts";
 
 let a: string[] = [];
 logger.setLogLevel("verbose");
-logger.setLoggingFn((...args: any[]) => a = args);
+logger.setLoggingFn((...args: any[]) => (a = args));
 const assertWithCleanup = (act: string) => {
   assertEquals(a[1].trim(), act);
   a = [];
@@ -49,9 +43,7 @@ Deno.test("should remove folders named after reserved names", () => {
   reservedNames.forEach((n) => writeRegistryScriptFolder(n));
 
   assertEquals(hashIngestedScripts(registryIntake).length, 0);
-  reservedNames.forEach((n) =>
-    assertEquals(dirExists(appendCwd(`/registry_in/${n}`)), false)
-  );
+  reservedNames.forEach((n) => assertEquals(dirExists(appendCwd(`/registry_in/${n}`)), false));
 });
 
 Deno.test("should hash files", () => {
@@ -69,10 +61,7 @@ Deno.test("should log skip on unchanged folders", () => {
   writeRegistryScriptFolder("test");
   writeScript("test", ``);
   setPortsRegistry({ test: basePort });
-  writeInternalRegistryJson(
-    "test",
-    `{"hashes":["d41d8cd98f00b204e9800998ecf8427e"]}`,
-  );
+  writeInternalRegistryJson("test", `{"hashes":["d41d8cd98f00b204e9800998ecf8427e"]}`);
 
   const hashes = hashIngestedScripts(registryIntake);
   assertEquals(hashes.length, 0);

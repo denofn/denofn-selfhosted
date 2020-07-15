@@ -8,10 +8,10 @@ export const getHashesFromDir = (dirName: string): string[] => {
       ? hashes.push(...getHashesFromDir(`${dirName}/${e.name}`))
       : e.isFile
       ? hashes.push(
-        createHash("md5").update(
-          Deno.readTextFileSync(appendCwd(`/registry_in/${dirName}/${e.name}`)),
-        ).toString(),
-      )
+          createHash("md5")
+            .update(Deno.readTextFileSync(appendCwd(`/registry_in/${dirName}/${e.name}`)))
+            .toString()
+        )
       : null;
   }
 

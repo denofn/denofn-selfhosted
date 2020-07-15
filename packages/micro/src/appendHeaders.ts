@@ -1,6 +1,6 @@
 export const appendHeaders = (
   baseHeaders: Headers = new Headers(),
-  toAppendHeaders: Headers = new Headers(),
+  toAppendHeaders: Headers = new Headers()
 ): Headers => {
   const newHeaders = new Headers(baseHeaders);
 
