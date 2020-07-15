@@ -1,7 +1,8 @@
+import { assertEquals, assert } from "../../testing/mod.ts";
+
 import { logger } from "../deps.ts";
 import * as db from "./db.ts";
 import { terminateHandler } from "./terminateHandler.ts";
-import { assertEquals, assert } from "./testing/deps.ts";
 
 let a: string[] = [];
 logger.setLoggingFn((...args: any[]) => a = args);

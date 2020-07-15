@@ -1,5 +1,10 @@
-import { assertEquals, assertThrows } from "./testing/deps.ts";
-import { addPortsRegistry, removePortsRegistry } from "./testing/fixtures.ts";
+import {
+  addPortsRegistry,
+  assertEquals,
+  assertThrows,
+  removePortsRegistry,
+} from "../../testing/mod.ts";
+
 import { assignPort, basePort, maxPort } from "./assignPort.ts";
 
 Deno.test("should assign basePort when no other scripts are present", () => {

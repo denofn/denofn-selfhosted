@@ -1,14 +1,15 @@
-import { assertEquals, assertThrows } from "./testing/deps.ts";
 import {
   addPortsRegistry,
+  assertEquals,
+  assertThrows,
+  removeInternalRegistryJson,
   removePortsRegistry,
-  removeRegistryJson,
-  writeRegistryJson,
-  writeRegistryScriptFolder,
   removeRegistryScriptFolder,
   writeInternalRegistryJson,
-  removeInternalRegistryJson,
-} from "./testing/fixtures.ts";
+  writeRegistryJson,
+  writeRegistryScriptFolder,
+} from "../../testing/mod.ts";
+
 import {
   REGISTRY_PORTS_PATH,
   getPortsRegistry,

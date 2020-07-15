@@ -1,5 +1,5 @@
-import { REGISTRY_PORTS_PATH } from "./../registry.ts";
-import { appendCwd } from "../../deps.ts";
+import { REGISTRY_PORTS_PATH } from "../registry/src/registry.ts";
+import { appendCwd } from "../shared/src/path.ts";
 
 export const removePortsRegistry = () => Deno.removeSync(REGISTRY_PORTS_PATH);
 
@@ -43,6 +43,9 @@ export const writeScript = (scriptName: string, data: string) =>
 export const removeScript = (scriptName: string) =>
   Deno.removeSync(appendCwd(`/registry_in/${scriptName}/index.ts`));
 
+export const writeBundle = (scriptName: string, data: string) =>
+  Deno.writeTextFileSync(appendCwd(`/registry/${scriptName}.js`), data);
+
 export const removeBundle = (scriptName: string) =>
   Deno.removeSync(appendCwd(`/registry/${scriptName}.js`));
 
@@ -57,10 +60,12 @@ export const removeSymlink = (path: string) =>
 
 export const testScript = `import {
   createHandler,
+  createResponseFromError,
   Handler,
+  NetworkError,
 } from "../../packages/micro/mod.ts";
 
-const handler: Handler = async (_) => {
+const handler: Handler = async () => {
   try {
     const data = await fetch(\`https://swapi.dev/api/people/1\`);
     const result = await data.json();
@@ -72,7 +77,7 @@ const handler: Handler = async (_) => {
       status: 200,
     };
   } catch {
-    return \`Something happened, don't know what.\`;
+    return createResponseFromError(new NetworkError());
   }
 };
 
