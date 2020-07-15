@@ -1,6 +1,14 @@
+import { filterOutQuery } from "./filters.ts";
 import { NetworkError } from "./networkError.ts";
 import { shouldStartWithSlash } from "./shouldStartWithSlash.ts";
+import { serve } from "./serve.ts";
 import { Handler, Response, Request, Methods } from "./types.ts";
+import { createHandler } from "./createHandler.ts";
+
+function assignUrl(x: Request, y: string) {
+  x.url = y;
+  return x;
+}
 
 export class Router {
   private _stack: [[string] | [string, Methods], Handler][];
@@ -25,6 +33,7 @@ export class Router {
   }
 
   async handle(req: Request, res: Response): Promise<Response> {
+    const reqUrl = shouldStartWithSlash(req.url);
     const l = this._stack.length;
     let idx = 0;
 
@@ -33,15 +42,19 @@ export class Router {
 
       const [[originalPath, method], layer] = this._stack[idx++];
       const path = shouldStartWithSlash(originalPath);
-      const rUrl = shouldStartWithSlash(req.url);
+      req.url = reqUrl;
 
       if (
         !method || method === req.method.toLowerCase()
       ) {
-        if (rUrl === "/" && originalPath === "/") {
+        if (filterOutQuery(reqUrl) === "/" && originalPath === "/") {
           return next(req, await layer(req, res));
-        } else if (rUrl.startsWith(path)) {
-          return next(req, await layer(req, res));
+        } else if (reqUrl.startsWith(path)) {
+          const strippedReq = assignUrl(
+            req,
+            shouldStartWithSlash(reqUrl.substring(path.length)),
+          );
+          return next(req, await layer(strippedReq, res));
         } else {
           return next(req, res);
         }
@@ -50,4 +63,8 @@ export class Router {
 
     return next(req, res);
   }
+
+  listen = async (port: number): Promise<void> => {
+    await serve(port, createHandler((req, res) => this.handle(req, res)));
+  };
 }
