@@ -22,11 +22,9 @@ export const get = (key: string) => db.get(key);
 
 export const has = (key: string) => db.has(key);
 
-export const hasStarted = (key: string) =>
-  has(key) ? Boolean(get(key)?.started) : false;
+export const hasStarted = (key: string) => (has(key) ? Boolean(get(key)?.started) : false);
 
-export const isWarmedUp = (key: string) =>
-  has(key) ? Boolean(get(key)?.warmedUp) : false;
+export const isWarmedUp = (key: string) => (has(key) ? Boolean(get(key)?.warmedUp) : false);
 
 export const isLocked = (key: string) =>
   has(key) ? Boolean((get(key)?.locks?.size ?? 0) >= 1) : false;
@@ -41,22 +39,13 @@ export const createLock = (key: string, lock: string) => {
   return set(key, { locks });
 };
 
-export const freeLock = (
-  key: string,
-  lock: string,
-  started: number,
-  _lockStarted?: number,
-) => {
+export const freeLock = (key: string, lock: string, started: number, _lockStarted?: number) => {
   logger.script(key, `Freeing lock ${lock}`, "verbose");
 
   const locks = get(key)?.locks as Set<string>;
 
   locks.delete(lock);
-  logger.script(
-    key,
-    `Lock ${lock} lasted ${compareWithNow(_lockStarted ?? started)}ms`,
-    "info",
-  );
+  logger.script(key, `Lock ${lock} lasted ${compareWithNow(_lockStarted ?? started)}ms`, "info");
 
   return set(key, { locks, started });
 };

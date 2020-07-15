@@ -9,9 +9,7 @@ if (!dirExists(registryIntake)) {
 }
 
 const args = Deno.args;
-logger.setLogLevel(
-  logger.levels.includes(args[0] as LogLevel) ? args[0] as LogLevel : "info",
-);
+logger.setLogLevel(logger.levels.includes(args[0] as LogLevel) ? (args[0] as LogLevel) : "info");
 
 const checkRegistry = async () => {
   const hashedScripts = hashIngestedScripts(registryIntake);

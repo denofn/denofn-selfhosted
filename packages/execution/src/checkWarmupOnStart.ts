@@ -1,26 +1,13 @@
-import {
-  appendCwd,
-  fileExists,
-  logger,
-  RegistryJSONInternal,
-  UUID,
-  wait,
-} from "../deps.ts";
+import { appendCwd, fileExists, logger, RegistryJSONInternal, UUID, wait } from "../deps.ts";
 import * as c from "./constants.ts";
 import * as db from "./db.ts";
 import { scenario1 } from "./registerScriptHandler.ts";
 
-export const checkWarmupOnStart = async (
-  registry: RegistryJSONInternal,
-) => {
+export const checkWarmupOnStart = async (registry: RegistryJSONInternal) => {
   const { name: scriptName, warmupOnStart } = registry;
 
   if (!warmupOnStart) {
-    logger.system(
-      "Execution",
-      `${scriptName} does not need warmup on start, skipping`,
-      "verbose",
-    );
+    logger.system("Execution", `${scriptName} does not need warmup on start, skipping`, "verbose");
     return; // bail early
   }
 

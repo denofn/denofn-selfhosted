@@ -8,9 +8,7 @@ import {
 } from "./registry.ts";
 import { bundle } from "./bundle.ts";
 
-export const persistRegistryInfo = async (
-  scriptsInRegistryIntake: ScriptRegistryIntake,
-) => {
+export const persistRegistryInfo = async (scriptsInRegistryIntake: ScriptRegistryIntake) => {
   for (const [name, hashes] of scriptsInRegistryIntake) {
     const port = assignPort(name);
 

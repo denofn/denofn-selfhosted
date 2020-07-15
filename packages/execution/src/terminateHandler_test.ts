@@ -5,7 +5,7 @@ import * as db from "./db.ts";
 import { terminateHandler } from "./terminateHandler.ts";
 
 let a: string[] = [];
-logger.setLoggingFn((...args: any[]) => a = args);
+logger.setLoggingFn((...args: any[]) => (a = args));
 const assertWithCleanup = (act: string) => {
   assertEquals(a[1].trim(), act);
   a = [];

@@ -10,12 +10,9 @@ export const bundle = async (scriptName: string, port: number) => {
     throw new Error(`Function ${scriptName} does not exist.`);
   }
 
-  const bundlerFile = Deno.readTextFileSync(
-    appendCwd(`/packages/templates/bundle.ts`),
-  ).replaceAll(toReplaceId, scriptName).replaceAll(
-    toReplacePortId,
-    `${port}`,
-  );
+  const bundlerFile = Deno.readTextFileSync(appendCwd(`/packages/templates/bundle.ts`))
+    .replaceAll(toReplaceId, scriptName)
+    .replaceAll(toReplacePortId, `${port}`);
 
   Deno.writeTextFileSync(toBundlePath, bundlerFile);
 
@@ -33,11 +30,5 @@ export const bundle = async (scriptName: string, port: number) => {
 
 const runBundle = (toBundlePath: string, scriptPath: string) =>
   Deno.run({
-    cmd: [
-      "time",
-      "deno",
-      "bundle",
-      toBundlePath,
-      scriptPath,
-    ],
+    cmd: ["time", "deno", "bundle", toBundlePath, scriptPath],
   });

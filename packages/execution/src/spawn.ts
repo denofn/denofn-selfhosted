@@ -1,8 +1,10 @@
 import { appendCwd, RegistryJSONInternal } from "../deps.ts";
 
-export const spawn = async (
-  { name: scriptName, whitelist, port }: RegistryJSONInternal,
-): Promise<Deno.Process> => {
+export const spawn = async ({
+  name: scriptName,
+  whitelist,
+  port,
+}: RegistryJSONInternal): Promise<Deno.Process> => {
   const d = new TextDecoder();
   const p = Deno.run({
     cmd: [

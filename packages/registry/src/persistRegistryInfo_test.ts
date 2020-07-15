@@ -18,10 +18,7 @@ import { getScriptRegistryInternal, getPortsRegistry } from "./registry.ts";
 
 Deno.test("should follow the entire registry flow", async () => {
   writeRegistryScriptFolder("test");
-  writeScript(
-    "test",
-    testScript,
-  );
+  writeScript("test", testScript);
   writeRegistryJson("test", `{"whitelist":[]}`);
 
   const hashedScripts = hashIngestedScripts(appendCwd("/registry_in"));
