@@ -1,6 +1,6 @@
-import { logger, ScriptRegistryIntake, reservedNames } from "../deps.ts";
-import { getPortsRegistry, getScriptRegistryInternal } from "./registry.ts";
+import { logger, reservedNames, ScriptRegistryIntake } from "../deps.ts";
 import { getHashesFromDir } from "./getHashesFromDir.ts";
+import { getPortsRegistry, getScriptRegistryInternal } from "./registry.ts";
 
 export const hashIngestedScripts = (registryIntake: string): ScriptRegistryIntake => {
   const portsRegistry = getPortsRegistry();

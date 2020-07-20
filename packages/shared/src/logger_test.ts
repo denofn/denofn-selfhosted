@@ -1,5 +1,4 @@
 import { assertEquals } from "../../testing/mod.ts";
-
 import * as logger from "./logger.ts";
 
 let a = [];

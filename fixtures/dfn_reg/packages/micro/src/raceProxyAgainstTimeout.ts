@@ -4,7 +4,7 @@ const TimeoutError = new NetworkError(408, "ECONTIMEDOUT");
 
 export async function raceProxyAgainstTimeout(
   p: Promise<globalThis.Response>,
-  timeout?: number,
+  timeout?: number
 ): Promise<globalThis.Response | NetworkError> {
   const isTimeout = !!timeout;
   let timeoutId: number;
@@ -16,10 +16,10 @@ export async function raceProxyAgainstTimeout(
     }),
     ...(isTimeout
       ? [
-        new Promise<NetworkError>((_, reject) => {
-          timeoutId = setTimeout(() => reject(TimeoutError), timeout);
-        }),
-      ]
+          new Promise<NetworkError>((_, reject) => {
+            timeoutId = setTimeout(() => reject(TimeoutError), timeout);
+          }),
+        ]
       : []),
   ]);
 }

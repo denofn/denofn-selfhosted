@@ -7,7 +7,6 @@ import {
   writeRegistryScriptFolder,
   writeScript,
 } from "../../testing/mod.ts";
-
 import { appendCwd, fileExists } from "../deps.ts";
 import { bundle } from "./bundle.ts";
 

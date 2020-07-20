@@ -1,5 +1,4 @@
-import { assertEquals, assert } from "../../testing/mod.ts";
-
+import { assert, assertEquals } from "../../testing/mod.ts";
 import { logger } from "../deps.ts";
 import * as db from "./db.ts";
 import { terminateHandler } from "./terminateHandler.ts";

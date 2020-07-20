@@ -7,7 +7,6 @@ import {
   writeRegistryScriptFolder,
   writeScript,
 } from "../../testing/mod.ts";
-
 import { appendCwd, dirExists, fileExists, logger, reservedNames } from "../deps.ts";
 import { basePort } from "./assignPort.ts";
 import { hashIngestedScripts } from "./hashIngestedScripts.ts";

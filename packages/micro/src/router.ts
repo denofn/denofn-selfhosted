@@ -1,9 +1,9 @@
+import { createHandler } from "./createHandler.ts";
 import { filterOutQuery } from "./filters.ts";
 import { NetworkError } from "./networkError.ts";
-import { shouldStartWithSlash } from "./shouldStartWithSlash.ts";
 import { serve } from "./serve.ts";
+import { shouldStartWithSlash } from "./shouldStartWithSlash.ts";
 import * as T from "./types.ts";
-import { createHandler } from "./createHandler.ts";
 
 function assignUrl(x: T.Request, y: string) {
   x.url = y;

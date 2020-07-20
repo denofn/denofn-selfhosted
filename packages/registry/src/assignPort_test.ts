@@ -4,7 +4,6 @@ import {
   assertThrows,
   removePortsRegistry,
 } from "../../testing/mod.ts";
-
 import { assignPort, basePort, maxPort } from "./assignPort.ts";
 
 Deno.test("should assign basePort when no other scripts are present", () => {

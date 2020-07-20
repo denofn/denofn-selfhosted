@@ -2,10 +2,10 @@ import {
   logger,
   proxy,
   proxyUrl,
-  Router,
+  RegistryJSONInternal,
   Request,
   Response,
-  RegistryJSONInternal,
+  Router,
   UUID,
 } from "../deps.ts";
 import * as c from "./constants.ts";

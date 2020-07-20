@@ -9,12 +9,11 @@ import {
   writeRegistryJson,
   writeRegistryScriptFolder,
 } from "../../testing/mod.ts";
-
 import {
-  REGISTRY_PORTS_PATH,
   getPortsRegistry,
-  getScriptRegistryInternal,
   getScriptRegistry,
+  getScriptRegistryInternal,
+  REGISTRY_PORTS_PATH,
   setScriptRegistry,
 } from "./registry.ts";
 
