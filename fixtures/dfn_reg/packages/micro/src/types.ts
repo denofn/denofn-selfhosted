@@ -16,10 +16,10 @@ export type OldRequest = {
   protoMinor: number;
 };
 
-export type ElementType<T extends ReadonlyArray<unknown>> = T extends
-  ReadonlyArray<
-    infer ElementType
-  > ? ElementType
+export type ElementType<T extends ReadonlyArray<unknown>> = T extends ReadonlyArray<
+  infer ElementType
+>
+  ? ElementType
   : never;
 
 export type Methods = ElementType<typeof methods>;
