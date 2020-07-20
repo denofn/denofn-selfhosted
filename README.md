@@ -77,7 +77,7 @@ This will map in `registry` to
 ### index.ts
 
 ```ts
-import { createHandler } from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0-rc.3/packages/micro/mod.ts";
+import { createHandler } from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0-rc.4/packages/micro/mod.ts";
 
 export default createHandler(async (_) => "Hello, world");
 ```
