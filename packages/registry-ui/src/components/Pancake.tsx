@@ -9,6 +9,7 @@ export function Pancake({
     <div
       onClick={onClick}
       className={css({
+        backgroundColor: "white",
         boxSizing: "border-box",
         borderStyle: "solid",
         borderWidth: ".1px",
