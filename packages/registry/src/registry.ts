@@ -29,6 +29,38 @@ export const getScriptRegistry = (scriptName: string): RegistryJSON => {
   return JSON.parse(Deno.readTextFileSync(scriptDir));
 };
 
+export const saveScriptRegistry = (scriptName: string, registry: RegistryJSON): boolean => {
+  const scriptDir = appendCwd(`/registry_in/${scriptName}/registry.json`);
+  if (!fileExists(scriptDir)) {
+    return false;
+    // throw new Error(`${scriptName} registry does not exist!`);
+  }
+
+  Deno.writeTextFileSync(scriptDir, JSON.stringify(registry));
+
+  return true;
+};
+
+export const getIndex = (scriptName: string): string => {
+  const scriptDir = appendCwd(`/registry_in/${scriptName}/index.ts`);
+  if (!fileExists(scriptDir)) {
+    throw new Error(`${scriptName} index does not exist!`);
+  }
+  return Deno.readTextFileSync(scriptDir);
+};
+
+export const saveIndex = (scriptName: string, code: string): boolean => {
+  const scriptDir = appendCwd(`/registry_in/${scriptName}/index.ts`);
+  if (!fileExists(scriptDir)) {
+    return false;
+    // throw new Error(`${scriptName} index does not exist!`);
+  }
+
+  Deno.writeTextFileSync(scriptDir, code);
+
+  return true;
+};
+
 export const setScriptRegistry = (
   rji: PartialInternalRegistry,
   rj: RegistryJSON

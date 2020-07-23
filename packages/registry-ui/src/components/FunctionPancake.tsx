@@ -1,3 +1,4 @@
+import { css } from "otion";
 import React from "react";
 
 import { Pancake } from "./Pancake";
@@ -10,7 +11,7 @@ type FunctionPancakeProps = {
   status: boolean;
 };
 
-export function FunctionPancake({ f, status }: FunctionPancakeProps) {
+export const FunctionPancake = React.memo(function FunctionPancake({ f, status }: FunctionPancakeProps) {
   const [, dispatch] = React.useContext(ViewsContext);
 
   return (
@@ -24,7 +25,13 @@ export function FunctionPancake({ f, status }: FunctionPancakeProps) {
       key={f}
     >
       <WordWrap>{f}</WordWrap>
-      <StatusBadge status={status} statusText={["warm", "cold"]} />
+      <StatusBadge
+        className={css({
+          marginTop: ".75rem",
+        })}
+        status={status}
+        statusText={["warm", "cold"]}
+      />
     </Pancake>
   );
-}
+});

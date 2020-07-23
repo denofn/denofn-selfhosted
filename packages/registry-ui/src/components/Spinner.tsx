@@ -3,6 +3,7 @@ import { css, keyframes } from "otion";
 
 type SpinnerProps = {
   dim?: string;
+  thickness?: string;
 };
 
 const spin = keyframes({
@@ -14,7 +15,7 @@ const spin = keyframes({
   },
 });
 
-export function Spinner({ dim }: SpinnerProps) {
+export function Spinner({ dim, thickness }: SpinnerProps) {
   return (
     <div
       className={css({
@@ -22,11 +23,11 @@ export function Spinner({ dim }: SpinnerProps) {
         transitionTimingFunction: "linear",
         width: dim || "1.5rem",
         height: dim || "1.5rem",
-        borderWidth: ".25rem",
+        borderWidth: thickness ?? ".25rem",
         borderColor: "#edf2f7",
         borderStyle: "solid",
-        borderTopWidth: ".25rem",
-        borderTopColor: "black",
+        borderTopWidth: thickness ?? ".25rem",
+        borderTopColor: "rgb(26, 32, 44)",
         borderRadius: "9999px",
         animation: `${spin} 1.5s linear infinite`,
       })}
