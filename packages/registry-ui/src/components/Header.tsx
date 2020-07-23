@@ -2,6 +2,7 @@ import React from "react";
 import { css } from "otion";
 
 import { ArrowLeft } from "../icons/ArrowLeft";
+import denoFn from "../icons/denofn_transparent.png";
 import { ViewsContext } from "./Views";
 
 export type HeaderProps = {
@@ -14,7 +15,7 @@ export function Header({ title = "denoFn" }: HeaderProps) {
     <header
       className={css({
         display: "flex",
-        backgroundColor: "rgb(26, 32, 44)",
+        backgroundColor: "rgb(0, 0, 0)",
         color: "white",
         borderColor: "rgb(237,242,247)",
         borderBottomStyle: "solid",
@@ -39,7 +40,7 @@ export function Header({ title = "denoFn" }: HeaderProps) {
             display: "flex",
           })}
         >
-          {(current === "manage" || current === "create") && (
+          {current === "manage" || current === "create" ? (
             <ArrowLeft
               onClick={() => dispatch({ current: "view-all" })}
               className={css({
@@ -51,6 +52,18 @@ export function Header({ title = "denoFn" }: HeaderProps) {
                 cursor: "pointer",
                 fill: "white",
               })}
+            />
+          ) : (
+            <img
+              className={css({
+                marginTop: ".5rem",
+                height: "3rem",
+                width: "3rem",
+                lineHeight: "3rem",
+                marginRight: ".5rem",
+              })}
+              src={denoFn}
+              alt="denoFn logo"
             />
           )}
           <h4
