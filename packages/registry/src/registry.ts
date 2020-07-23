@@ -1,4 +1,4 @@
-import { PartialInternalRegistry } from "../../shared/mod.ts";
+import { dirExists, PartialInternalRegistry } from "../../shared/mod.ts";
 import { appendCwd, fileExists, RegistryJSON, RegistryJSONInternal, RegistryKV } from "../deps.ts";
 
 export const REGISTRY_PORTS_PATH = appendCwd("registry/ports.json");
@@ -29,9 +29,13 @@ export const getScriptRegistry = (scriptName: string): RegistryJSON => {
   return JSON.parse(Deno.readTextFileSync(scriptDir));
 };
 
-export const saveScriptRegistry = (scriptName: string, registry: RegistryJSON): boolean => {
+export const saveScriptRegistry = (
+  scriptName: string,
+  registry: RegistryJSON,
+  checkExists?: boolean
+): boolean => {
   const scriptDir = appendCwd(`/registry_in/${scriptName}/registry.json`);
-  if (!fileExists(scriptDir)) {
+  if ((checkExists ?? true) && !fileExists(scriptDir)) {
     return false;
     // throw new Error(`${scriptName} registry does not exist!`);
   }
@@ -49,14 +53,25 @@ export const getIndex = (scriptName: string): string => {
   return Deno.readTextFileSync(scriptDir);
 };
 
-export const saveIndex = (scriptName: string, code: string): boolean => {
+export const saveIndex = (scriptName: string, code: string, checkExists?: boolean): boolean => {
   const scriptDir = appendCwd(`/registry_in/${scriptName}/index.ts`);
-  if (!fileExists(scriptDir)) {
+  if ((checkExists ?? true) && !fileExists(scriptDir)) {
     return false;
     // throw new Error(`${scriptName} index does not exist!`);
   }
 
   Deno.writeTextFileSync(scriptDir, code);
+
+  return true;
+};
+
+export const createScriptDir = (scriptName: string) => {
+  const scriptDir = appendCwd(`/registry_in/${scriptName}`);
+  if (dirExists(scriptDir)) {
+    return false;
+  }
+
+  Deno.mkdirSync(scriptDir);
 
   return true;
 };

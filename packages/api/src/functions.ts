@@ -1,14 +1,17 @@
 import { readRequestBody } from "../../micro/src/readBody.ts";
-import { saveIndex, saveScriptRegistry } from "../../registry/mod.ts";
 import {
+  createScriptDir,
   db,
   getIndex,
   getPortsRegistry,
   getScriptRegistry,
   RegistryJSON,
   Request,
+  reservedNames,
   Response,
   Router,
+  saveIndex,
+  saveScriptRegistry,
 } from "../deps.ts";
 import { API_V1 } from "./utils/prefixes.ts";
 
@@ -32,7 +35,7 @@ async function functionsRouter(req: Request, res: Response): Promise<Response> {
 }
 
 async function functionsPostRouter(req: Request, res: Response): Promise<Response> {
-  if (req.url === "/") return res;
+  if (req.url === "/") return createFunction(req, res);
   else {
     const scriptName = req.url.split("/")[1].split("?")[0];
     return saveFunction(scriptName, req, res);
@@ -40,13 +43,10 @@ async function functionsPostRouter(req: Request, res: Response): Promise<Respons
 }
 
 async function functionsOptionsRouter(req: Request, res: Response): Promise<Response> {
-  if (req.url === "/") return res;
-  else {
-    res.status = 200;
-    res.body = "OK";
-    res.headers?.append("Access-Control-Allow-Headers", "content-type");
-    return res;
-  }
+  res.status = 200;
+  res.body = "OK";
+  res.headers?.append("Access-Control-Allow-Headers", "content-type");
+  return res;
 }
 
 async function fetchAllFunctions(res: Response): Promise<Response> {
@@ -79,11 +79,35 @@ async function saveFunction(scriptName: string, req: Request, res: Response): Pr
     await readRequestBody(req.body)
   );
 
-  saveScriptRegistry(scriptName, data.registry);
-  saveIndex(scriptName, data.index);
+  const doneRegistry = saveScriptRegistry(scriptName, data.registry);
+  const doneIndex = saveIndex(scriptName, data.index);
+  const done = doneIndex && doneRegistry;
 
-  res.status = 200;
-  res.body = "OK";
-  // res.body = JSON.stringify({ registry, index, isWarmedUp });
+  res.status = done ? 200 : 500;
+  res.body = done ? "OK" : "Internal Server Error";
+  return res;
+}
+
+async function createFunction(req: Request, res: Response): Promise<Response> {
+  const {
+    scriptName,
+    ...data
+  }: { scriptName: string; index: string; registry: RegistryJSON } = JSON.parse(
+    await readRequestBody(req.body)
+  );
+
+  if (reservedNames.includes(scriptName) || !createScriptDir(scriptName))
+    return {
+      ...res,
+      status: 403,
+      body: `${scriptName} cannot be used, please use a different name`,
+    };
+
+  const doneRegistry = saveScriptRegistry(scriptName, data.registry, false);
+  const doneIndex = saveIndex(scriptName, data.index, false);
+  const done = doneIndex && doneRegistry;
+
+  res.status = done ? 200 : 500;
+  res.body = done ? "OK" : "Internal Server Error";
   return res;
 }

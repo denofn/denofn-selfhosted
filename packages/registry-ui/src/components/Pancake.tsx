@@ -26,12 +26,12 @@ export const Pancake = React.memo(function Pancake({
         backgroundColor: "white",
         boxSizing: "border-box",
         borderRadius: ".25rem",
-        minHeight: "5rem",
+        minHeight: "6rem",
         display: "flex",
         alignItems: "flex-start",
         flexDirection: "column",
         justifyContent: "space-between",
-        padding: padding ?? ".75rem",
+        padding: padding ?? "1rem",
         boxShadow: "0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,0.05)",
       })}${className ? ` ${className}` : ""}`}
     >

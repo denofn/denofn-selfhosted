@@ -3,16 +3,17 @@ import { css } from "otion";
 import { Spinner } from "./Spinner";
 
 export type ButtonProps = {
+  className?: string;
   loading?: boolean;
   title: string;
   disabled?: boolean;
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
-export const Button = React.memo(function Button({ loading, disabled, title, onClick }: ButtonProps) {
+export const Button = React.memo(function Button({ className, loading, disabled, title, onClick }: ButtonProps) {
   return (
     <button
-      className={css({
+      className={`${css({
         backgroundColor: "transparent",
         fontWeight: "bold",
         padding: ".5rem 1rem",
@@ -24,7 +25,7 @@ export const Button = React.memo(function Button({ loading, disabled, title, onC
         fontSize: "1rem",
         cursor: "pointer",
         ":hover": {
-          backgroundColor: "rgb(26, 32, 44)",
+          backgroundColor: "rgb(26, 32, 44) !important",
           color: "white",
           borderColor: "transparent",
         },
@@ -35,11 +36,11 @@ export const Button = React.memo(function Button({ loading, disabled, title, onC
         },
         selectors: {
           "&:disabled:hover": {
-            backgroundColor: "transparent",
+            backgroundColor: "transparent !important",
             borderColor: loading ? "rgb(26, 32, 44)" : "rgba(26,32,44,.5)",
           },
         },
-      })}
+      })}${className ? ` ${className}` : ""}`}
       disabled={disabled ?? false}
       onClick={onClick}
     >

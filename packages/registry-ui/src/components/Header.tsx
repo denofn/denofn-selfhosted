@@ -72,6 +72,7 @@ export function Header({ title = "denoFn" }: HeaderProps) {
               lineHeight: "1.5rem",
               marginTop: "1.25rem",
               marginBottom: "1.25rem",
+              textTransform: "lowercase",
             })}
           >
             {current === "manage" ? manage : current === "create" ? "create fn" : title}

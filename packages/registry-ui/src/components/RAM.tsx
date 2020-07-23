@@ -8,7 +8,7 @@ export function RAM({ children }: React.PropsWithChildren<{}>) {
         width: "100%",
         display: "grid",
         gridGap: "1rem",
-        gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+        gridTemplateColumns: "repeat(auto-fill, minmax(252px, 1fr))",
       })}
     >
       {children}
