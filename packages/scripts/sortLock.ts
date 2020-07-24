@@ -1,6 +1,7 @@
-import { appendCwd, fileExists } from "../shared/mod.ts";
+import { fileExists } from "../shared/mod.ts";
+import { lockPaths } from "./paths.ts";
 
-[`/lock.json`, `/packages/micro/lock.json`].map(appendCwd).forEach((lockPath) => {
+lockPaths().forEach((lockPath) => {
   if (!fileExists(lockPath)) {
     console.error(`Lock file does not exist`);
     Deno.exit(1);

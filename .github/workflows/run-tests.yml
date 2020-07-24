@@ -27,5 +27,5 @@ jobs:
 
       - name: Run tests
         run: |
-          ./denofn.sh test reload
+          ./denofn.sh cache reload
           ./denofn.sh test

@@ -15,11 +15,31 @@ jobs:
           repository: denoland/deno
           prefix: v
 
+      - uses: oprypin/find-latest-tag@v1
+        id: stdVersion
+        with:
+          repository: denoland/deno
+          prefix: std/
+
       - uses: actions/checkout@v2
 
       - name: updates Deno version
         run: |
           echo "${{ steps.denoVersion.outputs.tag }}" | cut -d'v' -f 2 > DENO_VERSION
+
+      - uses: denolib/setup-deno@v2
+        with:
+          deno-version: ${{ steps.denoVersion.outputs.tag }}
+
+      - name: update std
+        run: |
+          deno run --allow-read --allow-write ./packages/scripts/updateStd.ts ${{ steps.stdVersion.outputs.tag }}
+          ./denofn.sh cache update
+
+      - name: Run tests
+        run: |
+          ./denofn.sh cache reload
+          ./denofn.sh test
 
       - name: Create Pull Request
         id: cpr
