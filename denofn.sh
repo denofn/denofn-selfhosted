@@ -35,6 +35,18 @@ build()
   docker-compose build;
 }
 
+build_static()
+{
+  rm -rf $1/static
+  cd $1/packages/registry-ui;
+  rm -rf ./build
+  yarn build
+  mv ./build/static ../../static
+  cp ./build/* ../../static
+  cd ../../
+  deno run --allow-read --allow-write $1/packages/scripts/addStaticToHtml.ts $1
+}
+
 clear()
 {
   # bind variable
@@ -132,6 +144,11 @@ if [ $1 = "build" ]
     build;
 fi
 
+if [ $1 = "static" ]
+  then
+    build_static $2;
+fi
+
 if [ $1 = "clear" ]
   then
     clear $2;
@@ -147,6 +164,7 @@ fi
 if [ $1 = "update" ]
   then
     down;
+    build_static $2;
     build;
     up $2;
 fi
