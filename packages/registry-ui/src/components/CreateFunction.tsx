@@ -1,16 +1,16 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { css } from "otion";
 import React from "react";
 import { useFetch } from "use-http";
 
 import { RegistryJSON } from "../types";
+import { API_V1 } from "../utils/prefixes";
 import { Button } from "./Button";
 import { CenterAlign } from "./CenterAlign";
 import { Code } from "./Code";
 import { Error } from "./Error";
 import { Pancake } from "./Pancake";
 import { Registry } from "./Registry";
-import { API_V1 } from "../utils/prefixes";
-import { useAuth0 } from "@auth0/auth0-react";
 
 export type State = {
   scriptName: string;
@@ -58,7 +58,7 @@ export function CreateFunction({ reload }: { reload: () => void }) {
   createHandler,
   createResponse,
   Handler,
-} from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0-rc.4/packages/micro/mod.ts";
+} from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0-rc.5/packages/micro/mod.ts";
 
 const handler: Handler = async () => {
   return createResponse({

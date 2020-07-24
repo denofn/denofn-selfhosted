@@ -11,7 +11,6 @@ depsPaths().forEach((depsPath) => {
   }
 
   const v = newDenoFn.split("/")[1];
-  console.log(v);
 
   const depsFile = Deno.readTextFileSync(depsPath);
 
