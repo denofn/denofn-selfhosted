@@ -1,5 +1,6 @@
 import { Router } from "./deps.ts";
 import { functions } from "./src/functions.ts";
+import { registerStatic } from "./src/static.ts";
 import { API_V1 } from "./src/utils/prefixes.ts";
 
 export function api(app: Router) {
@@ -12,5 +13,5 @@ export function api(app: Router) {
   });
 
   functions(app);
-  // registerStatic(app);
+  registerStatic(app);
 }

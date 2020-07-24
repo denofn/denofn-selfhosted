@@ -1,1 +1,1 @@
-export const reservedNames = ["api", "static"];
+export const reservedNames = ["index.html", "favicon.ico", "api", "static"];

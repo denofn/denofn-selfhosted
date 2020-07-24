@@ -1,5 +1,4 @@
 registry
-static/
 !packages/registry
 !fixtures/**/registry
 registry_in

@@ -1,5 +1,8 @@
 {
+  "https://deno.land/std@0.61.0/_util/assert.ts": "e1f76e77c5ccb5a8e0dbbbe6cce3a56d2556c8cb5a9a8802fc9565af72462149",
+  "https://deno.land/std@0.61.0/bytes/mod.ts": "b1a149ac741728db00bda9ce1a2d044f248edd5ac95e708a6cc501bfd3adb4a7",
   "https://deno.land/std@0.61.0/fmt/colors.ts": "06444b6ebc3842a4b2340d804bfa81fc5452a03513cbb81bd7f6bf8f4b8f3ac4",
+  "https://deno.land/std@0.61.0/io/bufio.ts": "dd1fc575524fe8b44e128091ba0e6833be7d0966336ef12a407544440b762e17",
   "https://deno.land/std@0.61.0/testing/asserts.ts": "e12228748a139acfbf00c3ef6022fefd9fc265d7c2034368bad2cd80099c76df",
   "https://deno.land/std@0.61.0/testing/diff.ts": "77338e2b479626c096278d7b4a95f750753ee39558f314db6b794e8d8a98d515"
 }

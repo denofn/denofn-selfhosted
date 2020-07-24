@@ -40,7 +40,7 @@ build_static()
   rm -rf $1/static
   cd $1/packages/registry-ui;
   rm -rf ./build
-  yarn build
+  yarn && yarn build
   mv ./build/static ../../static
   cp ./build/* ../../static
   cd ../../
@@ -126,7 +126,7 @@ run_deno_test()
   fi
 }
 
-# $1 => up | down | build | clear | cache | update | log
+# $1 => up | down | static | build | clear | cache | update | log
 # $1 => registry and intake parent directory
 
 if [ $1 = "down" ]
@@ -164,7 +164,6 @@ fi
 if [ $1 = "update" ]
   then
     down;
-    build_static $2;
     build;
     up $2;
 fi

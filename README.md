@@ -25,6 +25,7 @@ Take a look at the [Todos](#todos) for what's next for denoFn.
 - Docker (and docker-compose)
 - The latest version of Deno is installed inside the Docker containers
 - VSCode will prompt you to install specific extensions, it is advised to at least install the Deno extension
+- Node.js and Yarn are required if you want to tinker with the UI
 
 _NOTE: further instructions are written towards UNIX systems since .sh scripts are used. But this probably all works on Windows as well._
 
@@ -38,6 +39,7 @@ _NOTE: further instructions are written towards UNIX systems since .sh scripts a
 `./denofn.sh` takes various commands, depending on what you want to do:
 
 - `build` uses docker-compose to build all docker images
+- `static <PATH>` creates a new build of the UI inside the `static` folder. Only necessary when there are changes inside `registry-ui`
 - `up <PATH>` creates volumes at selected path and docker-compose up
 - `down` docker-compose down + removes volumes
 - `update <PATH>` down + build + up

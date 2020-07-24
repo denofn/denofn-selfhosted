@@ -20,6 +20,7 @@ services:
       context: .
     command: info
     volumes:
+      - registry_in:/functions/registry_in
       - registry:/functions/registry
     ports:
       - "8000:8000"

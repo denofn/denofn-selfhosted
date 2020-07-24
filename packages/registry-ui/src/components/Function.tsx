@@ -88,9 +88,8 @@ export function Function({
   return (
     <Pancake
       padding="1.5rem"
+      flex={false}
       className={css({
-        display: "block",
-        width: "100%",
         minHeight: "calc(75vh - 7.5rem)",
       })}
     >

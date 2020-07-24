@@ -52,7 +52,6 @@ export const saveScriptRegistry = (
   const scriptDir = appendCwd(`/registry_in/${scriptName}/registry.json`);
   if ((checkExists ?? true) && !fileExists(scriptDir)) {
     return false;
-    // throw new Error(`${scriptName} registry does not exist!`);
   }
 
   Deno.writeTextFileSync(scriptDir, JSON.stringify(registry));
@@ -72,7 +71,6 @@ export const saveIndex = (scriptName: string, code: string, checkExists?: boolea
   const scriptDir = appendCwd(`/registry_in/${scriptName}/index.ts`);
   if ((checkExists ?? true) && !fileExists(scriptDir)) {
     return false;
-    // throw new Error(`${scriptName} index does not exist!`);
   }
 
   Deno.writeTextFileSync(scriptDir, code);
