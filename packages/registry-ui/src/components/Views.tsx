@@ -3,7 +3,7 @@ import React from "react";
 import { ViewsState } from "../types";
 
 export const ViewsContext = React.createContext<[ViewsState, React.Dispatch<ViewsState>]>([
-  { current: "login" },
+  { current: "view-all" },
   () => {},
 ]);
 

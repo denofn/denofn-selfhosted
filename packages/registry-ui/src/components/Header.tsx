@@ -1,8 +1,10 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
 import { css } from "otion";
 
 import { ArrowLeft } from "../icons/ArrowLeft";
 import denoFn from "../icons/denofn_transparent.png";
+import { HeaderButton } from "./HeaderButton";
 import { ViewsContext } from "./Views";
 
 export type HeaderProps = {
@@ -11,6 +13,7 @@ export type HeaderProps = {
 
 export function Header({ title = "denoFn" }: HeaderProps) {
   const [{ current, manage }, dispatch] = React.useContext(ViewsContext);
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
   return (
     <header
       className={css({
@@ -77,6 +80,13 @@ export function Header({ title = "denoFn" }: HeaderProps) {
           >
             {current === "manage" ? manage : current === "create" ? "create fn" : title}
           </h4>
+        </div>
+        <div
+          className={css({
+            marginTop: "1rem",
+          })}
+        >
+          {!isAuthenticated && <HeaderButton title="Sign in" onClick={() => loginWithRedirect()} />}
         </div>
       </div>
     </header>

@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { css } from "otion";
 import React from "react";
 import { useFetch } from "use-http";
@@ -12,7 +13,12 @@ import { RAM } from "./components/RAM";
 import { API_V1 } from "./utils/prefixes";
 
 export function ViewAllFunctions() {
-  const { loading, error, data } = useFetch<Record<string, boolean>>(API_V1("/functions"), {}, []);
+  const { isAuthenticated } = useAuth0();
+  const { get, loading, error, data } = useFetch<Record<string, boolean>>(API_V1("/functions"), {});
+
+  React.useEffect(() => {
+    if (isAuthenticated) get();
+  }, [isAuthenticated, get]);
 
   return (
     <Container>
