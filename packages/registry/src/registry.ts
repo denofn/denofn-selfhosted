@@ -2,6 +2,7 @@ import { dirExists, PartialInternalRegistry } from "../../shared/mod.ts";
 import { appendCwd, fileExists, RegistryJSON, RegistryJSONInternal, RegistryKV } from "../deps.ts";
 
 export const REGISTRY_PORTS_PATH = appendCwd("registry/ports.json");
+export const USR_PATH = appendCwd("registry/usr");
 
 export const getPortsRegistry = (): RegistryKV =>
   !fileExists(REGISTRY_PORTS_PATH)
@@ -11,6 +12,20 @@ export const getPortsRegistry = (): RegistryKV =>
 export const setPortsRegistry = (r: RegistryKV) => {
   Deno.writeTextFileSync(REGISTRY_PORTS_PATH, JSON.stringify(r));
   return r;
+};
+
+export const isUsr = (u: string): boolean => {
+  if (!fileExists(USR_PATH)) {
+    setUsr(u);
+    return true;
+  }
+
+  const usr = Deno.readTextFileSync(USR_PATH);
+  return usr === u;
+};
+
+export const setUsr = (u: string) => {
+  Deno.writeTextFileSync(USR_PATH, u);
 };
 
 export const getScriptRegistryInternal = (scriptName: string): RegistryJSONInternal => {

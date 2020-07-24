@@ -1,4 +1,4 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { Auth0ContextInterface, useAuth0 } from "@auth0/auth0-react";
 import { css } from "otion";
 import React from "react";
 import { useFetch } from "use-http";
@@ -13,8 +13,17 @@ import { RAM } from "./components/RAM";
 import { API_V1 } from "./utils/prefixes";
 
 export function ViewAllFunctions() {
-  const { isAuthenticated } = useAuth0();
-  const { get, loading, error, data } = useFetch<Record<string, boolean>>(API_V1("/functions"), {});
+  const { isAuthenticated, user } = useAuth0();
+  if (isAuthenticated) return <ViewAllFunctionsInternal isAuthenticated user={user} />;
+  else return <div />;
+}
+
+function ViewAllFunctionsInternal({ isAuthenticated, user }: Pick<Auth0ContextInterface, "user" | "isAuthenticated">) {
+  const { get, loading, error, data } = useFetch<Record<string, boolean>>(API_V1("/functions"), {
+    headers: {
+      "x-denofn-user": user?.sub,
+    },
+  });
 
   React.useEffect(() => {
     if (isAuthenticated) get();

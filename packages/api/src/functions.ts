@@ -5,6 +5,7 @@ import {
   getIndex,
   getPortsRegistry,
   getScriptRegistry,
+  isUsr,
   RegistryJSON,
   Request,
   reservedNames,
@@ -16,8 +17,12 @@ import {
 import { API_V1 } from "./utils/prefixes.ts";
 
 export async function functions(app: Router) {
-  app.use(API_V1("/functions"), async (_, res) => {
+  app.use(API_V1("/functions"), async (req, res) => {
     res.headers?.append("Access-Control-Allow-Origin", "*");
+    res.headers?.append("Access-Control-Allow-Headers", "x-denofn-user");
+    const usr = req.headers.get("x-denofn-user");
+    // if no usr exists but is in request, naively set it
+    if (usr) isUsr(usr);
     return res;
   });
 
@@ -27,7 +32,13 @@ export async function functions(app: Router) {
 }
 
 async function functionsRouter(req: Request, res: Response): Promise<Response> {
-  if (req.url === "/") return fetchAllFunctions(res);
+  const usr = req.headers.get("x-denofn-user");
+  if (!usr || !isUsr(usr))
+    return {
+      status: 401,
+      body: "Unauthorized",
+    };
+  else if (req.url === "/") return fetchAllFunctions(res);
   else {
     const scriptName = req.url.split("/")[1].split("?")[0];
     return fetchFunction(scriptName, res);
@@ -35,7 +46,13 @@ async function functionsRouter(req: Request, res: Response): Promise<Response> {
 }
 
 async function functionsPostRouter(req: Request, res: Response): Promise<Response> {
-  if (req.url === "/") return createFunction(req, res);
+  const usr = req.headers.get("x-denofn-user");
+  if (!usr || !isUsr(usr))
+    return {
+      status: 401,
+      body: "Unauthorized",
+    };
+  else if (req.url === "/") return createFunction(req, res);
   else {
     const scriptName = req.url.split("/")[1].split("?")[0];
     return saveFunction(scriptName, req, res);

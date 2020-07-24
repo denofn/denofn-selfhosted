@@ -10,6 +10,7 @@ import { Error } from "./Error";
 import { Pancake } from "./Pancake";
 import { Registry } from "./Registry";
 import { API_V1 } from "../utils/prefixes";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export type State = {
   scriptName: string;
@@ -50,6 +51,7 @@ function functionReducer(state: State, action: Action): State {
 }
 
 export function CreateFunction({ reload }: { reload: () => void }) {
+  const { user } = useAuth0();
   const [state, dispatch] = React.useReducer(functionReducer, {
     scriptName: "",
     index: `import {
@@ -71,7 +73,11 @@ export default createHandler(handler);
       warmupOnStart: false,
     },
   });
-  const { post, loading, response, error, data } = useFetch(API_V1(`/functions`));
+  const { post, loading, response, error, data } = useFetch(API_V1(`/functions`), {
+    headers: {
+      "x-denofn-user": user?.sub,
+    },
+  });
 
   async function saveChanges() {
     await post(state);

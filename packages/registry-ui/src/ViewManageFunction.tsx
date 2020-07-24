@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
 import { useFetch } from "use-http";
 
@@ -10,12 +11,17 @@ import { RegistryJSON } from "./types";
 import { API_V1 } from "./utils/prefixes";
 
 export function ViewManageFunction() {
+  const { user } = useAuth0();
   const [{ manage: scriptName }] = React.useContext(ViewsContext);
   const { get, loading, error, data, response } = useFetch<{
     index: string;
     registry: RegistryJSON;
     isWarmedUp: boolean;
-  }>(API_V1(`/functions/${scriptName}`), {});
+  }>(API_V1(`/functions/${scriptName}`), {
+    headers: {
+      "x-denofn-user": user?.sub,
+    },
+  });
 
   const loadFn = React.useCallback(async () => {
     await get();
