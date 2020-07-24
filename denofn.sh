@@ -67,12 +67,6 @@ cache()
     then
       ./packages/scripts/cache.sh;
   fi
-
-  if [ $1 = "version" ]
-    then
-      deno run --allow-read --allow-write ./packages/scripts/updateStd.ts $2
-      ./packages/scripts/cache.sh;
-  fi
 }
 
 log()
@@ -161,9 +155,9 @@ if [ $1 = "clear" ]
 fi
 
 if [ $1 = "cache" ]
-  # $2 => update | version | reload
+  # $2 => update | reload
   then
-    cache $2 $3;
+    cache $2;
 fi
 
 # down + build + up
