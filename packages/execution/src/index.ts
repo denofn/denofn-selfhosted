@@ -1,4 +1,11 @@
-import { getPortsRegistry, getScriptRegistryInternal, logger, LogLevel, Router } from "../deps.ts";
+import {
+  api,
+  getPortsRegistry,
+  getScriptRegistryInternal,
+  logger,
+  LogLevel,
+  Router,
+} from "../deps.ts";
 import { checkWarmupOnStart } from "./checkWarmupOnStart.ts";
 import * as c from "./constants.ts";
 import { registerScriptHandler } from "./registerScriptHandler.ts";
@@ -8,6 +15,7 @@ const args = Deno.args;
 logger.setLogLevel(logger.levels.includes(args[0] as LogLevel) ? (args[0] as LogLevel) : "info");
 
 const app = new Router();
+api(app);
 const scriptHandler = registerScriptHandler(app);
 
 let registeredApps = {};

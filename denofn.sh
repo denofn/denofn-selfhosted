@@ -35,6 +35,18 @@ build()
   docker-compose build;
 }
 
+build_static()
+{
+  rm -rf $1/static
+  cd $1/packages/registry-ui;
+  rm -rf ./build
+  yarn && yarn build
+  mv ./build/static ../../static
+  cp ./build/* ../../static
+  cd ../../
+  deno run --allow-read --allow-write $1/packages/scripts/addStaticToHtml.ts $1
+}
+
 clear()
 {
   # bind variable
@@ -114,7 +126,7 @@ run_deno_test()
   fi
 }
 
-# $1 => up | down | build | clear | cache | update | log
+# $1 => up | down | static | build | clear | cache | update | log
 # $1 => registry and intake parent directory
 
 if [ $1 = "down" ]
@@ -130,6 +142,11 @@ fi
 if [ $1 = "build" ]
   then
     build;
+fi
+
+if [ $1 = "static" ]
+  then
+    build_static $2;
 fi
 
 if [ $1 = "clear" ]
