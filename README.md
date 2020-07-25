@@ -79,12 +79,19 @@ This will map in `registry` to
 ### index.ts
 
 ```ts
-import { createHandler } from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0-rc.5/packages/micro/mod.ts";
+import {
+  createHandler,
+  createResponse,
+} from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0/packages/micro/functions/mod.ts";
 
-export default createHandler(async (_) => "Hello, world");
+export default createHandler(async (req, res) => {
+  return createResponse({
+    body: "Hello, World",
+  });
+});
 ```
 
-`createHandler` gives you a Request object and requires a string or Response object. See typings in `packages/micro/mod.ts`. Handlers must _always_ be async.
+`createHandler` gives you a server Request and an empty Response object that you can populate with your data. A Handler always returns a Response and _must always be async_.
 
 ### registry.json
 

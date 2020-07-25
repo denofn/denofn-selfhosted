@@ -22,7 +22,7 @@ const log = (tag: string, message: string, level: LogLevel) => {
     case "info":
       if (level === "verbose") return;
     case "verbose":
-      logFn(tag.padEnd(20), message.padStart(60));
+      logFn(tag, message);
   }
 };
 

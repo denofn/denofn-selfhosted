@@ -1,4 +1,5 @@
 import { createHandler } from "./createHandler.ts";
+import { createResponseFromError } from "./createResponseFromError.ts";
 import { filterOutQuery } from "./filters.ts";
 import { NetworkError } from "./networkError.ts";
 import { serve } from "./serve.ts";
@@ -14,6 +15,9 @@ export class Router {
   private _stack: [[string] | [string, T.Methods], T.Handler][];
   constructor() {
     this._stack = [];
+    this.use(async (req) =>
+      createResponseFromError(new NetworkError(404, `Cannot find ${req.url}`))
+    );
   }
 
   use(middleware: T.Handler): void;
@@ -22,7 +26,7 @@ export class Router {
     if (typeof pathOrMiddleware !== "string") {
       this._stack.push([[""], pathOrMiddleware]);
     } else if (typeof pathOrMiddleware === "string" && !!middleware) {
-      this._stack.push([[pathOrMiddleware], middleware]);
+      this._stack.push([[shouldStartWithSlash(pathOrMiddleware)], middleware]);
     } else {
       throw new NetworkError();
     }
@@ -45,9 +49,11 @@ export class Router {
       req.url = reqUrl;
 
       if (!method || method === req.method.toLowerCase()) {
-        if (filterOutQuery(reqUrl) === "/" && originalPath === "/") {
+        if (originalPath === "") {
           return next(req, await layer(req, res));
-        } else if (reqUrl.startsWith(path)) {
+        } else if (filterOutQuery(reqUrl) === "/" && originalPath === "/") {
+          return next(req, await layer(req, res));
+        } else if (filterOutQuery(reqUrl).split("/")[1] === path.split("/")[1]) {
           const strippedReq = assignUrl(req, shouldStartWithSlash(reqUrl.substring(path.length)));
           return next(req, await layer(strippedReq, res));
         } else {

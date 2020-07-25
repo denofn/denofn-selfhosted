@@ -35,3 +35,15 @@ Deno.test("should return error response", async () => {
   assertEquals(response.status, 404);
   assertEquals(response.body, "Not found");
 });
+
+Deno.test("should return generic error response", async () => {
+  const libHandler = createHandler(
+    mockHandler(() => {
+      throw new Error();
+    })
+  );
+
+  const response = await libHandler(mockRequest);
+  assertEquals(response.status, 500);
+  assertEquals(response.body, "Internal Server Error");
+});
