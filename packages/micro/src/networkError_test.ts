@@ -4,7 +4,7 @@ import { NetworkError } from "./networkError.ts";
 Deno.test("NetworkError", () => {
   const defaultNetworkError = new NetworkError();
   assertEquals(defaultNetworkError.statusCode, 500);
-  assertEquals(defaultNetworkError.message, "Internal server error");
+  assertEquals(defaultNetworkError.message, "Internal Server Error");
 
   let newNetworkError = new NetworkError(404, "Not found");
   assertEquals(newNetworkError.statusCode, 404);
