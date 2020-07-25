@@ -17,4 +17,4 @@ const checkRegistry = async () => {
 };
 
 await checkRegistry();
-setInterval(() => checkRegistry(), 30_000);
+setInterval(() => checkRegistry(), 10_000);
