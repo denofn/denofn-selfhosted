@@ -118,16 +118,13 @@ exports[`renders with the correct styles 1`] = `
           import {
   createHandler,
   createResponse,
-  Handler,
-} from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0-rc.5/packages/micro/mod.ts";
+} from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0/packages/micro/functions/mod.ts";
 
-const handler: Handler = async () =&gt; {
+export default createHandler(async (req, res) =&gt; {
   return createResponse({
     body: "Hello, World",
   });
-};
-
-export default createHandler(handler);
+});
 
         </textarea>
         <pre
@@ -160,13 +157,6 @@ export default createHandler(handler);
             ,
           </span>
           
-  Handler
-          <span
-            class="token punctuation"
-          >
-            ,
-          </span>
-          
 
           <span
             class="token punctuation"
@@ -183,7 +173,7 @@ export default createHandler(handler);
           <span
             class="token string"
           >
-            "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0-rc.5/packages/micro/mod.ts"
+            "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0/packages/micro/functions/mod.ts"
           </span>
           <span
             class="token punctuation"
@@ -196,27 +186,25 @@ export default createHandler(handler);
           <span
             class="token keyword"
           >
-            const
-          </span>
-           handler
-          <span
-            class="token operator"
-          >
-            :
+            export
           </span>
            
           <span
-            class="token function-variable function"
+            class="token keyword"
           >
-            Handler
+            default
           </span>
            
           <span
-            class="token operator"
+            class="token function"
           >
-            =
+            createHandler
           </span>
-           
+          <span
+            class="token punctuation"
+          >
+            (
+          </span>
           <span
             class="token keyword"
           >
@@ -227,6 +215,17 @@ export default createHandler(handler);
             class="token punctuation"
           >
             (
+          </span>
+          <span
+            class="token parameter"
+          >
+            req
+            <span
+              class="token punctuation"
+            >
+              ,
+            </span>
+             res
           </span>
           <span
             class="token punctuation"
@@ -310,37 +309,6 @@ export default createHandler(handler);
           >
             }
           </span>
-          <span
-            class="token punctuation"
-          >
-            ;
-          </span>
-          
-
-
-          <span
-            class="token keyword"
-          >
-            export
-          </span>
-           
-          <span
-            class="token keyword"
-          >
-            default
-          </span>
-           
-          <span
-            class="token function"
-          >
-            createHandler
-          </span>
-          <span
-            class="token punctuation"
-          >
-            (
-          </span>
-          handler
           <span
             class="token punctuation"
           >

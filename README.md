@@ -85,7 +85,9 @@ import {
 } from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0/packages/micro/functions/mod.ts";
 
 export default createHandler(async (req, res) => {
-  return { ...res, body: "Hello, World" };
+  return createResponse({
+    body: "Hello, World",
+  });
 });
 ```
 

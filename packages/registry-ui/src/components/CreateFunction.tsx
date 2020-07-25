@@ -57,16 +57,13 @@ export function CreateFunction({ reload }: { reload: () => void }) {
     index: `import {
   createHandler,
   createResponse,
-  Handler,
-} from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0-rc.5/packages/micro/mod.ts";
+} from "https://cdn.jsdelivr.net/gh/jeroenptrs/denofn@1.0.0/packages/micro/functions/mod.ts";
 
-const handler: Handler = async () => {
+export default createHandler(async (req, res) => {
   return createResponse({
     body: "Hello, World",
   });
-};
-
-export default createHandler(handler);
+});
 `,
     registry: {
       whitelist: [],
