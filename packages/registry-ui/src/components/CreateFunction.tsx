@@ -97,9 +97,8 @@ export default createHandler(handler);
       )}
       <Pancake
         padding="1.5rem"
+        flex={false}
         className={css({
-          display: "block",
-          width: "100%",
           minHeight: "calc(75vh - 7.5rem)",
           marginTop: error ? "1.5rem" : "0",
         })}

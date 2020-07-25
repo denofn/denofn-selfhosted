@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with the correct styles 1`] = `
+<DocumentFragment>
+  <div
+    class="_1r5gb7q _j033lg _1efi8gv _180q8om _1dbsnr2 _r24itg _50zrmy _st1wxx _1y5pc60"
+  >
+    a
+  </div>
+</DocumentFragment>
+`;
+
+exports[`renders with the correct styles for falsy status 1`] = `
+<DocumentFragment>
+  <div
+    class="_1r5gb7q _j033lg _1efi8gv _180q8om _1dbsnr2 _r24itg _50zrmy _6zs611 _1y5pc60"
+  >
+    b
+  </div>
+</DocumentFragment>
+`;

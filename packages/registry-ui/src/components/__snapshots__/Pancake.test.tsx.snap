@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with the correct styles 1`] = `
+<DocumentFragment>
+  <div
+    class="_zjik7 _5dh3r6 _qdeacm _2o6p8u _1qesdsb _1khn195 _sy4y6p _1x4v58x _1dvcxr3 _u68uts"
+  />
+</DocumentFragment>
+`;

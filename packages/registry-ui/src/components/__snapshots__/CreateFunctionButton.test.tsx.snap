@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with the correct styles 1`] = `
+<DocumentFragment>
+  <button
+    class="_1peqg37 _1efi8gv _1k9emg3 _my9kfw _fxc8cu _g3a0px _sy4y6p _r24itg _rkiwex _e0dnmk _1ijvbgw _gxlvbl _ryz482 _yoqe5q _141w5m3 _1y0fyy9 _1g8t4a7 _1n02zsb"
+  >
+    <div
+      class="_zjik7 _1h3rtzg"
+    >
+      Create Fn
+    </div>
+  </button>
+</DocumentFragment>
+`;
