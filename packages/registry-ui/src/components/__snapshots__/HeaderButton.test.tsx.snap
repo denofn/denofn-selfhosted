@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with the correct styles 1`] = `
+<DocumentFragment>
+  <button
+    class="_1khn195 _1peqg37 _1y5pc60 _1oscket _1efi8gv _my9kfw _fxc8cu _zowvxu _luq9nz _e0dnmk _r24itg _rkiwex _807wit _16qj0cz _ryz482"
+  >
+    title
+  </button>
+</DocumentFragment>
+`;

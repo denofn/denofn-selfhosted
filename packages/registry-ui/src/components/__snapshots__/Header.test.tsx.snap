@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with the correct styles 1`] = `
+<DocumentFragment>
+  <header
+    class="_zjik7 _14yn38p _1y5pc60 _pv9j5f _10mnup3 _m138fg _p13mol"
+  >
+    <div
+      class="_zjik7 _5dh3r6 _2o6p8u _1o3nkn _1tx1l5v _1d3w5wq _ufxjcp _1wunid1"
+    >
+      <div
+        class="_zjik7"
+      >
+        <img
+          alt="denoFn logo"
+          class="_r32fpw _cz8lfe _a88p1 _1i2fn2n _1gz641"
+          src="denofn_transparent.png"
+        />
+        <h4
+          class="_1r5gb7q _1dw7ik1 _2xh5x8 _9kwmmn _1tq8czj"
+        >
+          denoFn
+        </h4>
+      </div>
+      <div
+        class="_akdqam"
+      >
+        <button
+          class="_1khn195 _1peqg37 _1y5pc60 _1oscket _1efi8gv _my9kfw _fxc8cu _zowvxu _luq9nz _e0dnmk _r24itg _rkiwex _807wit _16qj0cz _ryz482"
+        >
+          Sign in
+        </button>
+      </div>
+    </div>
+  </header>
+</DocumentFragment>
+`;

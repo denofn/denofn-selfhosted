@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders COLD status 1`] = `
+<DocumentFragment>
+  <div
+    class="_e0dnmk _zjik7 _5dh3r6 _qdeacm _2o6p8u _1qesdsb _1khn195 _sy4y6p _1x4v58x _1dvcxr3 _u68uts"
+  >
+    <span
+      class="_1m5hyg0"
+    >
+      testFn
+    </span>
+    <div
+      class="_iabeq1 _1r5gb7q _j033lg _1efi8gv _180q8om _1dbsnr2 _r24itg _50zrmy _6zs611 _1y5pc60"
+    >
+      cold
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`renders with the correct styles 1`] = `
+<DocumentFragment>
+  <div
+    class="_e0dnmk _zjik7 _5dh3r6 _qdeacm _2o6p8u _1qesdsb _1khn195 _sy4y6p _1x4v58x _1dvcxr3 _u68uts"
+  >
+    <span
+      class="_1m5hyg0"
+    >
+      testFn
+    </span>
+    <div
+      class="_iabeq1 _1r5gb7q _j033lg _1efi8gv _180q8om _1dbsnr2 _r24itg _50zrmy _st1wxx _1y5pc60"
+    >
+      warm
+    </div>
+  </div>
+</DocumentFragment>
+`;

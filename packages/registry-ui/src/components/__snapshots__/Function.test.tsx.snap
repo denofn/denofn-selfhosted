@@ -1,0 +1,186 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with the correct styles 1`] = `
+<DocumentFragment>
+  <div
+    class="_4zleql _1qesdsb _1khn195 _sy4y6p _1x4v58x _1m3j4vw _u68uts _1xgdlcu"
+  >
+    <div
+      class="_zjik7 _1h3rtzg _2o6p8u _ti75j2 _1h026t7"
+    >
+      <div
+        class="_zjik7 _1h3rtzg"
+      >
+        <h2
+          class="_ti75j2 _1dw7ik1 _1bjds75"
+        >
+          scriptName
+        </h2>
+        <a
+          class="_eqx0xi _pmoan0"
+          href="http://localhost/scriptName"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <svg
+            class="_eq1hdy _niyf0z _xyzkeb"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          >
+            <path
+              class="prefix__heroicon-ui"
+              d="M19 6.41L8.7 16.71a1 1 0 11-1.4-1.42L17.58 5H14a1 1 0 010-2h6a1 1 0 011 1v6a1 1 0 01-2 0V6.41zM17 14a1 1 0 012 0v5a2 2 0 01-2 2H5a2 2 0 01-2-2V7c0-1.1.9-2 2-2h5a1 1 0 010 2H5v12h12v-5z"
+            />
+          </svg>
+        </a>
+        <div
+          class="_11pnire _1r5gb7q _j033lg _1efi8gv _180q8om _1dbsnr2 _r24itg _50zrmy _st1wxx _1y5pc60"
+        >
+          WARM
+        </div>
+      </div>
+      <button
+        class="_1peqg37 _1efi8gv _1k9emg3 _my9kfw _fxc8cu _g3a0px _sy4y6p _r24itg _rkiwex _e0dnmk _1ijvbgw _gxlvbl _ryz482 _yoqe5q _141w5m3 _1y0fyy9 _1g8t4a7 _1n02zsb"
+        disabled=""
+      >
+        <div
+          class="_zjik7 _1h3rtzg"
+        >
+          Save Changes
+        </div>
+      </button>
+    </div>
+    <hr
+      color="#e2e8f0"
+    />
+    <div
+      class="_di48ht"
+    >
+      <div
+        class="_1efi8gv _1hl83va"
+      >
+        URL Whitelist
+      </div>
+      <div
+        class=" css-2b097c-container"
+      >
+        <div
+          class=" css-yk16xz-control"
+        >
+          <div
+            class=" css-g1d714-ValueContainer"
+          >
+            <div
+              class=" css-1wa3eu0-placeholder"
+            >
+              Enter the domains you want to send requests to here...
+            </div>
+            <div
+              class="css-b8ldur-Input"
+            >
+              <div
+                class=""
+                style="display: inline-block;"
+              >
+                <input
+                  aria-autocomplete="list"
+                  autocapitalize="none"
+                  autocomplete="off"
+                  autocorrect="off"
+                  id="react-select-2-input"
+                  spellcheck="false"
+                  style="box-sizing: content-box; width: 2px; border: 0px; font-size: inherit; opacity: 1; outline: 0; padding: 0px;"
+                  tabindex="0"
+                  type="text"
+                  value=""
+                />
+                <div
+                  style="position: absolute; top: 0px; left: 0px; visibility: hidden; height: 0px; overflow: scroll; white-space: pre; font-size: inherit; font-family: -webkit-small-control; letter-spacing: normal; text-transform: none;"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class=" css-1hb7zxy-IndicatorsContainer"
+          />
+        </div>
+      </div>
+      <div
+        class="_1fo50kt _zjik7 _1h3rtzg"
+      >
+        <label
+          class="_1gz641 _1efi8gv"
+          for="warmupOnStart"
+        >
+          Post-registration warmup
+        </label>
+        <input
+          id="warmupOnStart"
+          type="checkbox"
+        />
+      </div>
+    </div>
+    <div
+      class="_di48ht"
+    >
+      <div
+        class="_1szb0m3 _1efi8gv"
+      >
+        index.ts
+      </div>
+      <div
+        class="_1qnppsc"
+        style="position: relative; text-align: left; box-sizing: border-box; padding: 0px; overflow: hidden;"
+      >
+        <textarea
+          autocapitalize="off"
+          autocomplete="off"
+          autocorrect="off"
+          class="npm__react-simple-code-editor__textarea"
+          data-gramm="false"
+          spellcheck="false"
+          style="margin: 0px; border: 0px; background: none; box-sizing: inherit; display: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-weight: inherit; letter-spacing: inherit; line-height: inherit; tab-size: inherit; text-indent: inherit; text-rendering: inherit; text-transform: inherit; white-space: pre-wrap; word-break: keep-all; overflow-wrap: break-word; position: absolute; top: 0px; left: 0px; height: 100%; width: 100%; resize: none; overflow: hidden; padding: 4px 4px 4px 4px;"
+        />
+        <pre
+          aria-hidden="true"
+          style="margin: 0px; border: 0px; background: none; box-sizing: inherit; display: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-weight: inherit; letter-spacing: inherit; line-height: inherit; tab-size: inherit; text-indent: inherit; text-rendering: inherit; text-transform: inherit; white-space: pre-wrap; word-break: keep-all; overflow-wrap: break-word; position: relative; pointer-events: none; padding: 4px 4px 4px 4px;"
+        >
+          <br />
+        </pre>
+        <style
+          type="text/css"
+        >
+          
+/**
+ * Reset the text fill color so that placeholder is visible
+ */
+.npm__react-simple-code-editor__textarea:empty {
+  -webkit-text-fill-color: inherit !important;
+}
+
+/**
+ * Hack to apply on some CSS on IE10 and IE11
+ */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /**
+    * IE doesn't support '-webkit-text-fill-color'
+    * So we use 'color: transparent' to make the text transparent on IE
+    * Unlike other browsers, it doesn't affect caret color in IE
+    */
+  .npm__react-simple-code-editor__textarea {
+    color: transparent !important;
+  }
+
+  .npm__react-simple-code-editor__textarea::selection {
+    background-color: #accef7 !important;
+    color: transparent !important;
+  }
+}
+
+        </style>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with the correct styles 1`] = `
+<DocumentFragment>
+  <span
+    class="_1m5hyg0"
+  />
+</DocumentFragment>
+`;
